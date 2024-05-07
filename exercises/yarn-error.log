@@ -1,0 +1,48 @@
+Arguments: 
+  /Users/kyoyasawada/.nodebrew/node/v16.20.0/bin/node /usr/local/Cellar/yarn/1.22.19/libexec/bin/yarn.js
+
+PATH: 
+  /Users/kyoyasawada/.jenv/shims:/usr/local/opt/mysql@5.7/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/Users/kyoyasawada/.pyenv/shims:/Users/kyoyasawada/.pyenv/bin:/Users/kyoyasawada/.nodebrew/current/bin:/Users/kyoyasawada/.rbenv/shims:/Users/kyoyasawada/.rbenv/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Users/kyoyasawada/.jenv/shims:/usr/local/opt/mysql@5.7/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/Users/kyoyasawada/.pyenv/shims:/Users/kyoyasawada/.pyenv/bin:/Users/kyoyasawada/.nodebrew/current/bin:/Users/kyoyasawada/.rbenv/shims:/Users/kyoyasawada/.rbenv/bin:/tools:/tools/bin:/platform-tools:/Users/kyoyasawada/Library/Android/sdk/platform-tools:/usr/local/home/Android/Sdk/tools:/usr/local/home/Android/Sdk/tools/bin:/usr/local/home/Android/Sdk/platform-tools:/Users/kyoyasawada/Library/Android/sdk/platform-tools
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  16.20.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: getaddrinfo ENOTFOUND registry.yarnpkg.com
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:109:26)
+
+npm manifest: 
+  {
+    "name": "preset-js",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+      "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
+      "lint": "eslint . --max-warnings=0",
+      "format": "prettier --write ."
+    },
+    "author": "",
+    "private": true,
+    "devDependencies": {
+      "eslint": "^8.51.0",
+      "eslint-config-prettier": "^9.0.0",
+      "jest": "^29.7.0",
+      "prettier": "^3.0.3"
+    },
+    "type": "module",
+    "dependencies": {
+      "acorn": "^8.11.3"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
