@@ -1,17 +1,17 @@
-let x = 0
+let x = 0;
 
 for (let i = 1; i <= 5; i++) {
-  x = i
+  x = i;
   try {
-    throw Error()
+    throw Error();
   } catch {
-    break
+    break;
   } finally {
-    continue
+    continue;
   }
 }
 
-console.log(x)
+console.log(x);
 
 // 予想: 5
 // 結果: 5

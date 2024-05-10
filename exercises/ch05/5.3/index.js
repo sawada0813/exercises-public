@@ -1,29 +1,29 @@
 export function isHolidayWithIf(param) {
-  const holidayList = ['土', '日']
-  const workDayList = ['月', '火', '水', '木', '金']
-  if (holidayList.includes(param)) return true
-  else if (workDayList.includes(param)) return false
-  else return 'Invalid string param'
+  const holidayList = ["土", "日"];
+  const workDayList = ["月", "火", "水", "木", "金"];
+  if (holidayList.includes(param)) return true;
+  else if (workDayList.includes(param)) return false;
+  else return "Invalid string param";
 }
 
 export function isHolidayWithSwitch(param) {
-  const dayOfWeekList = ['土', '日', '月', '火', '水', '木', '金']
-  if (!dayOfWeekList.includes(param)) return 'Invalid string param'
-  switch(param) {
-    case '土':
-      return true
-    case '日':
-      return true
-    case '月':
-      return false
-    case '火':
-      return false
-    case '水':
-      return false
-    case '木':
-      return false
-    case '金':
-      return false
+  const dayOfWeekList = ["土", "日", "月", "火", "水", "木", "金"];
+  if (!dayOfWeekList.includes(param)) return "Invalid string param";
+  switch (param) {
+    case "土":
+      return true;
+    case "日":
+      return true;
+    case "月":
+      return false;
+    case "火":
+      return false;
+    case "水":
+      return false;
+    case "木":
+      return false;
+    case "金":
+      return false;
   }
 }
 

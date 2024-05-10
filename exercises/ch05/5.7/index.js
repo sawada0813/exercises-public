@@ -1,12 +1,12 @@
 function f() {
   try {
-    return true
+    return true;
   } finally {
-    return false // Unsafe usage of ReturnStatement.
+    return false; // Unsafe usage of ReturnStatement.
   }
 }
 
-console.log(f())
+console.log(f());
 
 // 予想: true
 // 結果: false

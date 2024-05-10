@@ -1,10 +1,10 @@
 export function sample() {
-  const sameVariableName = 'hoge'
+  const sameVariableName = "hoge";
   {
-    const sameVariableName = 'fuga'
-    console.log(sameVariableName)
+    const sameVariableName = "fuga";
+    console.log(sameVariableName);
   }
-  console.log(sameVariableName)
+  console.log(sameVariableName);
 }
 
-sample()
+sample();

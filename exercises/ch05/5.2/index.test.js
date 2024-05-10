@@ -1,56 +1,56 @@
-import { replaceWithIf, replaceWithSwitch } from './index'
+import { replaceWithIf, replaceWithSwitch } from "./index";
 
-describe('replace', ()=>{
-  test('with if', ()=>{
-    expect(replaceWithIf('\0test')).toBe('\\0test')
-    expect(replaceWithIf('test\0test')).toBe('test\\0test')
-    expect(replaceWithIf('test\0')).toBe('test\\0')
-    expect(replaceWithIf('\btest')).toBe('\\btest')
-    expect(replaceWithIf('test\btest')).toBe('test\\btest')
-    expect(replaceWithIf('test\b')).toBe('test\\b')
-    expect(replaceWithIf('\ntest')).toBe('\\ntest')
-    expect(replaceWithIf('test\ntest')).toBe('test\\ntest')
-    expect(replaceWithIf('test\n')).toBe('test\\n')
-    expect(replaceWithIf('\vtest')).toBe('\\vtest')
-    expect(replaceWithIf('test\vtest')).toBe('test\\vtest')
-    expect(replaceWithIf('test\v')).toBe('test\\v')
-    expect(replaceWithIf('\ftest')).toBe('\\ftest')
-    expect(replaceWithIf('test\ftest')).toBe('test\\ftest')
-    expect(replaceWithIf('test\f')).toBe('test\\f')
-    expect(replaceWithIf('\rtest')).toBe('\\rtest')
-    expect(replaceWithIf('test\rtest')).toBe('test\\rtest')
-    expect(replaceWithIf('test\r')).toBe('test\\r')
-    expect(replaceWithIf('"test')).toBe('\\"test')
-    expect(replaceWithIf('test"test')).toBe('test\\"test')
-    expect(replaceWithIf('test"')).toBe('test\\"')
-    expect(replaceWithIf("'test")).toBe("\\'test")
-    expect(replaceWithIf("test'test")).toBe("test\\'test")
-    expect(replaceWithIf("test'")).toBe("test\\'")
-  })
-  test('with switch', () => {
-    expect(replaceWithSwitch('\0test')).toBe('\\0test')
-    expect(replaceWithSwitch('test\0test')).toBe('test\\0test')
-    expect(replaceWithSwitch('test\0')).toBe('test\\0')
-    expect(replaceWithSwitch('\btest')).toBe('\\btest')
-    expect(replaceWithSwitch('test\btest')).toBe('test\\btest')
-    expect(replaceWithSwitch('test\b')).toBe('test\\b')
-    expect(replaceWithSwitch('\ntest')).toBe('\\ntest')
-    expect(replaceWithSwitch('test\ntest')).toBe('test\\ntest')
-    expect(replaceWithSwitch('test\n')).toBe('test\\n')
-    expect(replaceWithSwitch('\vtest')).toBe('\\vtest')
-    expect(replaceWithSwitch('test\vtest')).toBe('test\\vtest')
-    expect(replaceWithSwitch('test\v')).toBe('test\\v')
-    expect(replaceWithSwitch('\ftest')).toBe('\\ftest')
-    expect(replaceWithSwitch('test\ftest')).toBe('test\\ftest')
-    expect(replaceWithSwitch('test\f')).toBe('test\\f')
-    expect(replaceWithSwitch('\rtest')).toBe('\\rtest')
-    expect(replaceWithSwitch('test\rtest')).toBe('test\\rtest')
-    expect(replaceWithSwitch('test\r')).toBe('test\\r')
-    expect(replaceWithSwitch('"test')).toBe('\\"test')
-    expect(replaceWithSwitch('test"test')).toBe('test\\"test')
-    expect(replaceWithSwitch('test"')).toBe('test\\"')
-    expect(replaceWithSwitch("'test")).toBe("\\'test")
-    expect(replaceWithSwitch("test'test")).toBe("test\\'test")
-    expect(replaceWithSwitch("test'")).toBe("test\\'")
-  })
-})
+describe("replace", () => {
+  test("with if", () => {
+    expect(replaceWithIf("\0test")).toBe("\\0test");
+    expect(replaceWithIf("test\0test")).toBe("test\\0test");
+    expect(replaceWithIf("test\0")).toBe("test\\0");
+    expect(replaceWithIf("\btest")).toBe("\\btest");
+    expect(replaceWithIf("test\btest")).toBe("test\\btest");
+    expect(replaceWithIf("test\b")).toBe("test\\b");
+    expect(replaceWithIf("\ntest")).toBe("\\ntest");
+    expect(replaceWithIf("test\ntest")).toBe("test\\ntest");
+    expect(replaceWithIf("test\n")).toBe("test\\n");
+    expect(replaceWithIf("\vtest")).toBe("\\vtest");
+    expect(replaceWithIf("test\vtest")).toBe("test\\vtest");
+    expect(replaceWithIf("test\v")).toBe("test\\v");
+    expect(replaceWithIf("\ftest")).toBe("\\ftest");
+    expect(replaceWithIf("test\ftest")).toBe("test\\ftest");
+    expect(replaceWithIf("test\f")).toBe("test\\f");
+    expect(replaceWithIf("\rtest")).toBe("\\rtest");
+    expect(replaceWithIf("test\rtest")).toBe("test\\rtest");
+    expect(replaceWithIf("test\r")).toBe("test\\r");
+    expect(replaceWithIf('"test')).toBe('\\"test');
+    expect(replaceWithIf('test"test')).toBe('test\\"test');
+    expect(replaceWithIf('test"')).toBe('test\\"');
+    expect(replaceWithIf("'test")).toBe("\\'test");
+    expect(replaceWithIf("test'test")).toBe("test\\'test");
+    expect(replaceWithIf("test'")).toBe("test\\'");
+  });
+  test("with switch", () => {
+    expect(replaceWithSwitch("\0test")).toBe("\\0test");
+    expect(replaceWithSwitch("test\0test")).toBe("test\\0test");
+    expect(replaceWithSwitch("test\0")).toBe("test\\0");
+    expect(replaceWithSwitch("\btest")).toBe("\\btest");
+    expect(replaceWithSwitch("test\btest")).toBe("test\\btest");
+    expect(replaceWithSwitch("test\b")).toBe("test\\b");
+    expect(replaceWithSwitch("\ntest")).toBe("\\ntest");
+    expect(replaceWithSwitch("test\ntest")).toBe("test\\ntest");
+    expect(replaceWithSwitch("test\n")).toBe("test\\n");
+    expect(replaceWithSwitch("\vtest")).toBe("\\vtest");
+    expect(replaceWithSwitch("test\vtest")).toBe("test\\vtest");
+    expect(replaceWithSwitch("test\v")).toBe("test\\v");
+    expect(replaceWithSwitch("\ftest")).toBe("\\ftest");
+    expect(replaceWithSwitch("test\ftest")).toBe("test\\ftest");
+    expect(replaceWithSwitch("test\f")).toBe("test\\f");
+    expect(replaceWithSwitch("\rtest")).toBe("\\rtest");
+    expect(replaceWithSwitch("test\rtest")).toBe("test\\rtest");
+    expect(replaceWithSwitch("test\r")).toBe("test\\r");
+    expect(replaceWithSwitch('"test')).toBe('\\"test');
+    expect(replaceWithSwitch('test"test')).toBe('test\\"test');
+    expect(replaceWithSwitch('test"')).toBe('test\\"');
+    expect(replaceWithSwitch("'test")).toBe("\\'test");
+    expect(replaceWithSwitch("test'test")).toBe("test\\'test");
+    expect(replaceWithSwitch("test'")).toBe("test\\'");
+  });
+});

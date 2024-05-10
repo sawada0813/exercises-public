@@ -13,7 +13,7 @@ export function removeSemicolon(input) {
     if (
       ast.body[i].type === "VariableDeclaration" ||
       ast.body[i].type === "ExpressionStatement"
-      ) {
+    ) {
       const point = ast.body[i].end;
       if (result[point - j + 1] === "(") continue;
       if (result[point - j] === ` `) continue;

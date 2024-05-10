@@ -1,14 +1,14 @@
 function throwError() {
-  throw 'dummy error'
+  throw "dummy error";
 }
 
 try {
-  console.log('try')
-  throwError()
-} catch(e) {
-  console.log('catch')
+  console.log("try");
+  throwError();
+} catch (e) {
+  console.log("catch");
 } finally {
-  console.log('finally')
+  console.log("finally");
 }
 
 // try
