@@ -1,4 +1,4 @@
-import { restrict, substract } from "./index.ts";
+import { restrict, substract } from "./index.js";
 
 describe("restrict", () => {
   const symbol = Symbol("test");
@@ -50,7 +50,9 @@ describe("restrict", () => {
     "$#: target,template,expected = {$target, $template, $expected}",
     ({ target, template, expected }) => {
       const result = restrict(target, template);
-      expect(result).toBe(target);
+      // toBe()はオブジェクト型のマッチャーとして使えないのでtoStrictEqual())に置き換え
+      // expect(result).toStrictEqual(target)
+      expect(result).toStrictEqual(target);
       expect(result).toEqual(expected);
     },
   );
