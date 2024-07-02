@@ -26,6 +26,7 @@ describe("f", () => {
     ).toBe("12Fizz4BuzzFizz78FizzBuzz");
   });
 
+  // FAILED
   it("returns function with multi line", () => {
     expect(f("{ const result = $1 + $2;\n return result; }")(1, 2)).toBe(3);
   });

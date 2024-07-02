@@ -1,4 +1,4 @@
-import { counterGroup } from "./index.ts";
+import { counterGroup } from "./index.js";
 
 describe("counterGroup", () => {
   describe("Counter", () => {
@@ -46,14 +46,70 @@ describe("counterGroup", () => {
       c1.count();
       c1.count();
       c1.count();
+      c1.count();
       expect(cg.total()).toBe(3);
       const c2 = cg.newCounter();
+      c2.count();
       c2.count();
       c2.count();
       expect(cg.total()).toBe(5);
       const c3 = cg.newCounter();
       c3.count();
+      c3.count();
       expect(cg.total()).toBe(6);
+      c1.reset();
+      expect(cg.total()).toBe(3);
+    });
+  });
+
+  describe("#average", () => {
+    test("It returns average amount of all counters in CounterGroup", () => {
+      const cg = counterGroup();
+      expect(() => cg.average()).toThrowError(TypeError);
+      const c1 = cg.newCounter();
+      c1.count();
+      c1.count();
+      c1.count();
+      c1.count();
+      expect(cg.average()).toBe(3);
+      const c2 = cg.newCounter();
+      c2.count();
+      c2.count();
+      c2.count();
+      expect(cg.average()).toBe(2.5);
+      const c3 = cg.newCounter();
+      c3.count();
+      c3.count();
+      expect(cg.average()).toBe(2);
+      c1.reset();
+      expect(cg.average()).toBe(1);
+    });
+  });
+
+  describe("#variance", () => {
+    test("It returns variance of all counters in CounterGroup", () => {
+      const cg = counterGroup()
+      expect(() => cg.variance()).toThrowError(TypeError)
+      const c1 = cg.newCounter()
+      c1.count()
+      c1.count()
+      c1.count()
+      c1.count()
+      expect(() => cg.variance()).toThrowError(TypeError)
+      const c2 = cg.newCounter()
+      c2.count()
+      c2.count()
+      c2.count()
+      // expect(cg.variance()).toBe(1.625);
+      expect(cg.variance()).toBe(0.25)
+      const c3 = cg.newCounter()
+      c3.count()
+      c3.count()
+      expect(cg.variance()).toBeLessThan(0.7) // 0.66666...
+      expect(cg.variance()).toBeGreaterThan(0.6)
+      c1.reset()
+      expect(cg.variance()).toBeLessThan(0.7) // 0.6666...
+      expect(cg.variance()).toBeGreaterThan(0.6)
     });
   });
 
@@ -65,12 +121,15 @@ describe("counterGroup", () => {
       c11.count();
       c11.count();
       c11.count();
+      c11.count();
       const c12 = cg1.newCounter();
+      c12.count();
       c12.count();
       c12.count();
 
       const cg2 = counterGroup();
       const c21 = cg2.newCounter();
+      c21.count();
       c21.count();
       const c22 = cg2.newCounter();
       c22.reset();
