@@ -21,6 +21,6 @@ export function f(args) {
       return eval(result);
     } catch (e) {
       return result.replaceAll("+","")
-    }`
-  )
+    }`,
+  );
 }

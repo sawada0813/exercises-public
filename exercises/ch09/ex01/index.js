@@ -6,9 +6,9 @@ export class C {
     return this.i ?? 1;
   }
   method() {
-    return this.i+1
+    return this.i + 1;
   }
   static C() {
-    return new C()
+    return new C();
   }
 }

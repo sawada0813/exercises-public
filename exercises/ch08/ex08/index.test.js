@@ -88,28 +88,28 @@ describe("counterGroup", () => {
 
   describe("#variance", () => {
     test("It returns variance of all counters in CounterGroup", () => {
-      const cg = counterGroup()
-      expect(() => cg.variance()).toThrowError(TypeError)
-      const c1 = cg.newCounter()
-      c1.count()
-      c1.count()
-      c1.count()
-      c1.count()
-      expect(() => cg.variance()).toThrowError(TypeError)
-      const c2 = cg.newCounter()
-      c2.count()
-      c2.count()
-      c2.count()
+      const cg = counterGroup();
+      expect(() => cg.variance()).toThrowError(TypeError);
+      const c1 = cg.newCounter();
+      c1.count();
+      c1.count();
+      c1.count();
+      c1.count();
+      expect(() => cg.variance()).toThrowError(TypeError);
+      const c2 = cg.newCounter();
+      c2.count();
+      c2.count();
+      c2.count();
       // expect(cg.variance()).toBe(1.625);
-      expect(cg.variance()).toBe(0.25)
-      const c3 = cg.newCounter()
-      c3.count()
-      c3.count()
-      expect(cg.variance()).toBeLessThan(0.7) // 0.66666...
-      expect(cg.variance()).toBeGreaterThan(0.6)
-      c1.reset()
-      expect(cg.variance()).toBeLessThan(0.7) // 0.6666...
-      expect(cg.variance()).toBeGreaterThan(0.6)
+      expect(cg.variance()).toBe(0.25);
+      const c3 = cg.newCounter();
+      c3.count();
+      c3.count();
+      expect(cg.variance()).toBeLessThan(0.7); // 0.66666...
+      expect(cg.variance()).toBeGreaterThan(0.6);
+      c1.reset();
+      expect(cg.variance()).toBeLessThan(0.7); // 0.6666...
+      expect(cg.variance()).toBeGreaterThan(0.6);
     });
   });
 
