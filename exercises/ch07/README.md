@@ -40,11 +40,8 @@ function sumOfEvensIsLargerThan42(array) {
       continue;
     }
     sum += array[i];
-    if (sum >= 42) {
-      return true;
-    }
   }
-  return false;
+  return sum >= 42;
 }
 ```
 
