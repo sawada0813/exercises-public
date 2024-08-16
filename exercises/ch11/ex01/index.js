@@ -3,10 +3,7 @@ export class TypeMap {
     this.map = new Map();
   }
   #isConstructor(func) {
-    return (
-      typeof func === "function" &&
-      func.prototype.constructor === func
-    );
+    return typeof func === "function" && func.prototype.constructor === func;
   }
   set(key, value) {
     if (this.#isConstructor(key) && value.constructor === key) {

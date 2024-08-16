@@ -11,11 +11,11 @@ const countWeekdays = (startAt, endAt) => {
 
   while (startDate <= endDate) {
     if (weekday.includes(startDate.getDay())) {
-      weekdayCount++
+      weekdayCount++;
     }
     startDate.setDate(startDate.getDate() + 1);
   }
-  return weekdayCount
+  return weekdayCount;
 };
 
 function getLocaleDay(dateString, locale) {
@@ -27,10 +27,10 @@ function getLocaleDay(dateString, locale) {
 }
 
 function getFirstDayOfLastMonth() {
-  const now = new Date()
-  const year = now.getFullYear() // 現在の年を取得
-  const month = now.toLocaleDateString().split('/')[1] // 現在の月を取得
-  return new Date(Date.UTC(year, month - 2, 1)) 
+  const now = new Date();
+  const year = now.getFullYear(); // 現在の年を取得
+  const month = now.toLocaleDateString().split("/")[1]; // 現在の月を取得
+  return new Date(Date.UTC(year, month - 2, 1));
 }
 
-export { countDays, countWeekdays, getLocaleDay, getFirstDayOfLastMonth }
+export { countDays, countWeekdays, getLocaleDay, getFirstDayOfLastMonth };

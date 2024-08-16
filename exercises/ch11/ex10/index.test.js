@@ -3,7 +3,7 @@ import {
   countWeekdays,
   getLocaleDay,
   getFirstDayOfLastMonth,
-} from './index.js'
+} from "./index.js";
 
 test("countDays", () => {
   expect(countDays(2021, 1)).toBe(31);
@@ -35,6 +35,8 @@ test("getLocaleDay", () => {
 });
 
 test("getFirstDayOfLastMonth", () => {
-  expect(getFirstDayOfLastMonth()).toEqual(new Date('2024-06-01T00:00:00.000Z')) // 宿題デバッグ用
+  expect(getFirstDayOfLastMonth()).toEqual(
+    new Date("2024-06-01T00:00:00.000Z"),
+  ); // 宿題デバッグ用
   // expect(getFirstDayOfLastMonth()).toEqual("2024/7/1 0:00:00"); // 8月2日用
 });

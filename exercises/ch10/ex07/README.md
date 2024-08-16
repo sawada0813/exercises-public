@@ -11,7 +11,7 @@
 - https://qiita.com/charon1212/items/5c68f408e1ea4b5e8da9
 - https://github.com/date-fns/date-fns/blob/main/docs/fp.md
 
-# wip [Luxon](https://github.com/moment/luxon)
+# [Luxon](https://github.com/moment/luxon)
 
 `src/luxon.js`で再エクスポートしている。その他の`src`直下にはテストのファイルはなく、リポジトリのルートディレクトリにテスト用のディレクトリがある。`src/impl`配下には12ファイル存在し、それぞれのファイルの中に複数の関数もしくはクラスが定義されexportされている。
 

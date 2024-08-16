@@ -27,7 +27,7 @@ export { default as Animal } from "./animal.js";
 export { default as AnimalClass } from "./animal.js";
 ```
 
-また、`es6/utils.js`で`Animal`クラスをimportする行が書き変わった。（元々は`classses/index.js`からimportしていたが検証向けに書き換えた。）
+また、`es6/utils.js`で`Animal`クラスをimportする行が書き変わった。（元々は`classes/index.js`からimportしていたが検証向けに書き換えた。）
 
 ```js
 // rename前
