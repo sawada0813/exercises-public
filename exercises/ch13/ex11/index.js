@@ -1,23 +1,23 @@
 export async function retryWithExponentialBackoff(func, maxRetry, callback) {
-  let retryCount = 0
+  let retryCount = 0;
   async function retryFunc() {
-    let result = false
+    let result = false;
     try {
-      result = await func()
+      result = await func();
     } catch (e) {
-      // 
+      //
     }
     if (result === true) {
-      callback(true)
-      return
+      callback(true);
+      return;
     }
-    callback(false)
+    callback(false);
     if (retryCount < maxRetry) {
-      setTimeout(retryFunc, Math.pow(2, retryCount) * 1000)
+      setTimeout(retryFunc, Math.pow(2, retryCount) * 1000);
     } else {
-      return
+      return;
     }
-    retryCount++
+    retryCount++;
   }
-  retryFunc()
+  retryFunc();
 }

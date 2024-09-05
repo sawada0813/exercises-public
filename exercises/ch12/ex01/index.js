@@ -50,9 +50,9 @@ console.log(iter.return("done"));
 // counterIter: return: done
 // { value: 'done', done: true }
 try {
-  console.log(iter.throw("error"))
+  console.log(iter.throw("error"));
 } catch (e) {
-  console.log(e)
+  console.log(e);
 }
 // counterIter: throw: error
 // error
@@ -65,17 +65,17 @@ console.log(generator.next());
 console.log(generator.return("done"));
 // counterGen: finally
 // { value: 'done', done: true }
-try{
-  console.log(generator.throw('error'))
+try {
+  console.log(generator.throw("error"));
 } catch (e) {
-  console.log(e)
+  console.log(e);
 }
 // error
 
 // ループの途中でbreakするとreturn()が呼ばれる
 for (const iter of counterIter(3)) {
-  console.log(iter)
-  break
+  console.log(iter);
+  break;
 }
 // counterIter
 // counterIter: Symbol.iterator
@@ -84,14 +84,13 @@ for (const iter of counterIter(3)) {
 // counterIter: return: undefined ←ココ
 
 for (const gen of counterGen(3)) {
-  console.log(gen)
-  break
+  console.log(gen);
+  break;
 }
 // counterGen
 // counterGen: next
 // 1
 // counterGen: finally
-
 
 // わからなかったこと
 // イテレータのthrow()メソッド、イテレータを呼び出す側から明示的に呼ぶ以外の呼び出す方法があるのかどうか

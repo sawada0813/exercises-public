@@ -9,7 +9,7 @@ import {
   logA,
   logB,
   logC,
-} from '../index.js'
+} from "../index.js";
 
 async function i1() {
   // NOTE: any で1つ Promise が解決された時に他の Promise はどうなるだろうか
@@ -26,18 +26,18 @@ async function i1() {
   //         |----------|
   //                          log(v) v=100
   //                          |-|
-  let v = 0
+  let v = 0;
 
   v = await Promise.any([
     wait1().then(() => 42),
     wait2()
       .then(() => (v = 100))
       .then(() => 0),
-  ])
+  ]);
 
-  log(v)
-  await wait2()
-  log(v)
+  log(v);
+  await wait2();
+  log(v);
 }
 
 async function i2() {
@@ -60,19 +60,19 @@ async function i2() {
   //                   |-|
   const v = await Promise.all([
     wait3().then(() => {
-      logA()
-      return 'A'
+      logA();
+      return "A";
     }),
     wait2().then(() => {
-      logB()
-      return 'B'
+      logB();
+      return "B";
     }),
     wait1().then(() => {
-      logC()
-      return 'C'
+      logC();
+      return "C";
     }),
-  ])
-  log(v)
+  ]);
+  log(v);
 }
 
 async function i3() {
@@ -102,26 +102,26 @@ async function i3() {
   //               |---------------|
   //                               log(v): ④0
   //                               |-|
-  let v = 42
+  let v = 42;
   try {
     await Promise.all([
       wait3().then(() => {
-        v = 0
-        errX()
+        v = 0;
+        errX();
       }),
       wait2().then(() => {
-        logB()
-        return 'B'
+        logB();
+        return "B";
       }),
       wait1().then(() => {
-        errY()
+        errY();
       }),
-    ])
+    ]);
   } catch (e) {
-    log(e.message)
-    log(v)
-    await wait3()
-    log(v)
+    log(e.message);
+    log(v);
+    await wait3();
+    log(v);
   }
 }
 
@@ -152,11 +152,11 @@ async function i4() {
   //                       |-|
   //                         log('COMPLETED')
   //                         |-|
-  let p = Promise.resolve(null)
+  let p = Promise.resolve(null);
   for (let i = 0; i < 5; ++i) {
-    p = p.then(() => wait((5 - i) * 1000).then(() => log(i)))
+    p = p.then(() => wait((5 - i) * 1000).then(() => log(i)));
   }
-  return p.then(() => log('COMPLETED'))
+  return p.then(() => log("COMPLETED"));
 }
 
 async function i5() {
@@ -188,11 +188,11 @@ async function i5() {
   // log('COMPLETED') ①
   // |-|
 
-  let p = Promise.resolve(null)
+  let p = Promise.resolve(null);
   for (let i = 0; i < 5; ++i) {
-    p = p.then(wait((5 - i) * 1000).then(() => log(i)))
+    p = p.then(wait((5 - i) * 1000).then(() => log(i)));
   }
-  return p.then(() => log('COMPLETED'))
+  return p.then(() => log("COMPLETED"));
 }
 
 async function i6() {
@@ -222,8 +222,8 @@ async function i6() {
   //         log('COMPLETED') ⑥
   //         |-|
   return Promise.all(
-    [0, 1, 2, 3, 4].map((i) => wait((5 - i) * 1000).then(() => log(i)))
-  ).then(() => log('COMPLETED'))
+    [0, 1, 2, 3, 4].map((i) => wait((5 - i) * 1000).then(() => log(i))),
+  ).then(() => log("COMPLETED"));
 }
 
 async function i7() {
@@ -278,29 +278,29 @@ async function i7() {
   //                       |--|
   //                           log(v=10) ①
   //                           |-|
-  let v = 0
+  let v = 0;
 
   // 1秒待った後に2秒間隔で value の値を更新
   const p1 = async () => {
-    await wait1()
+    await wait1();
     for (let i = 0; i < 5; i++) {
-      const next = v + 1
-      v = next
-      await wait2()
+      const next = v + 1;
+      v = next;
+      await wait2();
     }
-  }
+  };
 
   // 2秒間隔で value の値を更新
   const p2 = async () => {
     for (let i = 0; i < 5; i++) {
-      const next = v + 1
-      v = next
-      await wait2()
+      const next = v + 1;
+      v = next;
+      await wait2();
     }
-  }
+  };
 
-  await Promise.all([p1(), p2()])
-  log(v)
+  await Promise.all([p1(), p2()]);
+  log(v);
 }
 
 async function i8() {
@@ -360,26 +360,26 @@ async function i8() {
   //                            log(v=5) ①
   //                            |-|
 
-  let v = 0
+  let v = 0;
 
   const p1 = async () => {
-    await wait1()
+    await wait1();
     for (let i = 0; i < 5; i++) {
       // NOTE: value の読み込み (value + 1) と書き込み (value = ...) の間に await が...
-      const next = v + 1
-      await wait2()
-      v = next
+      const next = v + 1;
+      await wait2();
+      v = next;
     }
-  }
+  };
 
   const p2 = async () => {
     for (let i = 0; i < 5; i++) {
-      const next = v + 1
-      await wait2()
-      v = next
+      const next = v + 1;
+      await wait2();
+      v = next;
     }
-  }
+  };
 
-  await Promise.all([p1(), p2()])
-  log(v)
+  await Promise.all([p1(), p2()]);
+  log(v);
 }

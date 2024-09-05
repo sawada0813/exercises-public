@@ -1,10 +1,4 @@
-import {
-  wait1,
-  wait2,
-  errX,
-  errY,
-log
-} from "../index.js";
+import { wait1, wait2, errX, errY, log } from "../index.js";
 
 // async function h1() {
 //   // 予想: 3秒後に A が出力され、その2秒後に B が出力され、その1秒後に C が出力される。
