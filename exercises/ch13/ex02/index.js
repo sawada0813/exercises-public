@@ -150,18 +150,29 @@ function f5() {
   //                     |-|
   //                      log(v=40) (1つ目のthenの戻り値が引数に渡される)
   //                       |-|
+  // 図解(正しい図解):
+  //  wait2
+  // |----------|
+  //            logA
+  //            |-|
+  //              log(1000)
+  //              |-|
+  //  wait(1000)
+  // |----|
+  //      logB
+  //      |-|
   wait2()
     .then(() => {
-      logA();
-      return 40;
+      logA()
+      return 40
     })
     .then(
       wait1().then(() => {
-        logB();
-        return 100;
-      }),
+        logB()
+        return 100
+      })
     )
-    .then((v) => log(v));
+    .then((v) => log(v))
 }
 
 function f6() {
@@ -285,6 +296,8 @@ function f12() {
   // 結果: できない。エラーが発生して何も出力されない。
   // 解説: new Promise 内のコールバック関数内で発生した例外は、Promise コンストラクタのスコープがで発生するため reject として扱われない
   // そのため、catch でキャッチできない。明示的に reject する必要がある
+
+  // setTimeoutは別の非同期処理で実行されるため、この場合は catch できない
   new Promise((resolve, reject) => {
     setTimeout(() => errX(), 0);
     // setTimeout(reject(new Error("error")), 0) // これは catch できる

@@ -19,5 +19,5 @@ export async function retryWithExponentialBackoff(func, maxRetry, callback) {
     }
     retryCount++;
   }
-  retryFunc();
+  await retryFunc();
 }

@@ -1,0 +1,4 @@
+## 間接呼び出し
+
+generatorはループの中でthrowしてもcatch節に引っかからない。
+あれ、結局iteratorとgeneratorはthrowを間接的に呼べるんだっけ

@@ -7,7 +7,7 @@ async function fetchSumOfFileSizes(path) {
       files.map((file) => fsPromises.stat([path, file].join(""))),
     );
     return stats.reduce((acc, stat) => acc + stat.size, 0);
-  } catch (error) {
+  } catch (error) { // これはなくていい
     throw new Error(error);
   }
 }

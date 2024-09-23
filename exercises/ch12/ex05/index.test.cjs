@@ -54,4 +54,5 @@ describe("readLines", () => {
     const lines = readLines(testFilePath);
     expect(lines.next().done).toBe(true);
   });
+  // クローズできているか
 });

@@ -23,7 +23,7 @@ class LatchTask {
   #currentCount = 0;
 
   constructor(count) {
-    this.#latchCount = count;
+    this.#ßlatchCount = count;
   }
 
   async run() {

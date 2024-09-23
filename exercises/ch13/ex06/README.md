@@ -38,3 +38,5 @@ delayHello().then(
   },
 );
 ```
+
+jQuery Deferred の内部のPromiseとは、今勉強しているPromiseとは別物です。歴史的にPromiseの方が後に登場しています。
