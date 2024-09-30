@@ -5,6 +5,8 @@
   "scripts": {
     "test@js": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
     "test@ts": "jest --runInBand",
+    "test:browser": "playwright test",
+    "server": "serve",
     "lint": "eslint . --max-warnings=0",
     "format": "prettier --write ."
   },
@@ -22,7 +24,9 @@
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2",
     "webpack": "^5.93.0",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "@playwright/test": "^1.44.1",
+    "serve": "^14.2.3"
   },
   "type": "module",
   "dependencies": {

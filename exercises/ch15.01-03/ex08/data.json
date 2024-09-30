@@ -1,4 +1,4 @@
 {
-  "name": "Taro",
+  "name": "Taro</p><button onClick={alert('hacked!')}>押せ</button><p>",
   "age": 50
 }

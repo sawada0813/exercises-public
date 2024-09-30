@@ -1,0 +1,18 @@
+ex13/:119 
+        
+        
+       GET http://localhost:3000/ch15.01-03/ex13/30 404 (Not Found)
+ex13/:140 
+        
+        
+       GET http://localhost:3000/ch15.01-03/ex13/200 404 (Not Found)
+index.js:2 NodeList(4) [a, a, a, a]
+index.js:5 NodeList(4) [div.product-item, div.product-item, div.product-item, div.product-item]
+index.js:10 <img src=​"./​30" alt=​"カート">​
+index.js:13 <p class=​"price">​¥12,000​</p>​
+index.js:18 <img src=​"./​200" alt=​"商品1">​
+index.js:26 <button>​検索​</button>​
+index.js:29 <p>​© 2024 家電オンラインショップ. All rights reserved.​</p>​
+index.js:32 <div class=​"product-item">​…​</div>​
+index.js:37 <img src=​"./​30" alt=​"アカウント">​
+index.js:45 <a href=​"#about">​会社情報​</a>​
