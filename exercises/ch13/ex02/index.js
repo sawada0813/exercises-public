@@ -163,16 +163,16 @@ function f5() {
   //      |-|
   wait2()
     .then(() => {
-      logA()
-      return 40
+      logA();
+      return 40;
     })
     .then(
       wait1().then(() => {
-        logB()
-        return 100
-      })
+        logB();
+        return 100;
+      }),
     )
-    .then((v) => log(v))
+    .then((v) => log(v));
 }
 
 function f6() {

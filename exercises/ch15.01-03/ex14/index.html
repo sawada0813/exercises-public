@@ -6,23 +6,23 @@
     <title>Product List</title>
     <script type="module">
       document
-        .getElementById('category-select')
-        .addEventListener('change', (e) => {
-          const selectedCategory = e.target.value
-          const products = document.querySelectorAll('#productList li')
+        .getElementById("category-select")
+        .addEventListener("change", (e) => {
+          const selectedCategory = e.target.value;
+          const products = document.querySelectorAll("#productList li");
           products.forEach((product) => {
             // ここにコードを書いて完成させる
-            if (selectedCategory === 'all') {
-              product.style.display = 'list-item'
+            if (selectedCategory === "all") {
+              product.style.display = "list-item";
             } else if (
-              selectedCategory !== product.getAttribute('data-category')
+              selectedCategory !== product.getAttribute("data-category")
             ) {
-              product.style.display = 'none'
+              product.style.display = "none";
             } else {
-              product.style.display = 'list-item'
+              product.style.display = "list-item";
             }
-          })
-        })
+          });
+        });
     </script>
   </head>
   <body>

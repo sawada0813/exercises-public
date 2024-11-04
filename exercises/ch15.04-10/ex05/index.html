@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Custom Element Example</title>
+    <script src="index.js" defer></script>
+  </head>
+  <body>
+    <p>
+      The document has one marble: <inline-circle></inline-circle>. The HTML
+      parser instance two more marbles:
+      <!-- border-radius を新たに追加 -->
+      <inline-circle
+        diameter="1.2em"
+        color="blue"
+        border-radius="0%"
+      ></inline-circle>
+      <inline-circle
+        diameter=".6em"
+        color="gold"
+        height="2.0em"
+      ></inline-circle>
+      How many marbles does the document contain now?
+    </p>
+  </body>
+</html>

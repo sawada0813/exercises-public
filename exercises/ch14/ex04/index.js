@@ -1,10 +1,11 @@
 class Hiragana {
   constructor(hiragana) {
-    this.hiragana = hiragana
-    this.utf16code = hiragana.charCodeAt(0)
+    // ここでひらがなかどうかのバリデーションが欲しかった
+    this.hiragana = hiragana;
+    this.utf16code = hiragana.charCodeAt(0);
   }
   [Symbol.toPrimitive](hint) {
-    if (hint === 'string' || hint === 'default') {
+    if (hint === "string" || hint === "default") {
       return this.hiragana;
     } else {
       return this.utf16code;
@@ -12,4 +13,4 @@ class Hiragana {
   }
 }
 
-export default Hiragana
+export default Hiragana;

@@ -1,4 +1,14 @@
-import { wait1, wait2, wait3, errX, errY, log, logA, logB, logC } from "../index.js";
+import {
+  wait1,
+  wait2,
+  wait3,
+  errX,
+  errY,
+  log,
+  logA,
+  logB,
+  logC,
+} from "../index.js";
 
 async function h1() {
   // 予想: 3秒後に A が出力され、その2秒後に B が出力され、その1秒後に C が出力される。
@@ -17,18 +27,18 @@ async function h1() {
   //                                      logC
   //                                      |-|
   try {
-    await wait3()
-    logA()
-    await wait2()
-    logB()
-    await wait1()
-    logC()
+    await wait3();
+    logA();
+    await wait2();
+    logB();
+    await wait1();
+    logC();
   } catch (e) {
-    log(e.message)
+    log(e.message);
   }
 }
 
-h1()
+h1();
 
 function h2() {
   // NOTE: h3 との比較用
@@ -43,8 +53,8 @@ function h2() {
   //      |-|
   // 理由: new Promiseコンストラクタの引数は同期的に実行されるため、errX の例外が catch される
   new Promise(() => {
-    errX()
-  }).catch((e) => log(e.message))
+    errX();
+  }).catch((e) => log(e.message));
 }
 
 function h3() {
@@ -54,8 +64,8 @@ function h3() {
   // 理由: new Promise コンストラクタの引数は同期的に実行されるため、async関数内で発生した例外は catch されない
   // また、async function は Promise を返し、その Promise が reject されるわけではにないため、catch されない(？)
   new Promise(async () => {
-    errX()
-  }).catch((e) => log(e.message))
+    errX();
+  }).catch((e) => log(e.message));
 }
 
 async function h4() {

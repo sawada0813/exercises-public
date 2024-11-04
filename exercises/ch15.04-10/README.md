@@ -124,8 +124,8 @@ link.addEventListener("click", (e) => {
 
 [ex06/index.js](ex06/index.js) の続きを実装し Web Components を使った ToDo アプリを完成させなさい。
 
-**補足**: この問題では ToDo アプリ全体を 1 つの Web Components (`<todo-app>`) としたが [TodoMVC の例](https://github.com/tastejs/todomvc/tree/master/examples/web-components) のように複数の Web Components に分けて実装する方法も考えられる。
-
+**補足**: この問題では ToDo アプリ全体を 1 つの Web Components (`<todo-app>`) としたが [TodoMVC の例](https://github.com/tastejs/todomvc/tree/mastr/examples/web-components) のように複数の Web Components に分けて実装する方法も考えられる。
+c
 **出題範囲**: 15.6
 
 ## 問題 15.4-10.7 🖋️
@@ -161,7 +161,7 @@ link.addEventListener("click", (e) => {
 
 [ex11](ex11) の続きを実装し、完了または未完了の ToDo のみ表示できるような ToDo アプリを完成させなさい。
 
-補足: `// ここを実装してね` 以外の実装を変更してもよい。ToDoの完了や削除を`Active`や`Completed`画面に反映させるためには、それぞれの操作に対するイベントリスナーも修正する必要がある。
+補足: `// ここを実装してね` 以外の実装を変更してもよい。ToDo の完了や削除を`Active`や`Completed`画面に反映させるためには、それぞれの操作に対するイベントリスナーも修正する必要がある。
 
 **参考**: 完成後のイメージは以下:
 

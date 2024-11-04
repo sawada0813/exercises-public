@@ -18,6 +18,11 @@ function renderTodos(todos) {
     li.classList.toggle("completed", todo.completed);
     toggle.addEventListener("change", () => {
       todo.completed = toggle.checked;
+      todos.forEach((existTodo) => {
+        if (existTodo.content === todo.content) {
+          existTodo.completed = todo.completed;
+        }
+      });
       renderTodos(todos);
     });
     label.textContent = todo.content;
@@ -45,4 +50,12 @@ form.addEventListener("submit", (e) => {
 
 window.addEventListener("hashchange", () => {
   // ここを実装してね
+  console.log(todos);
+  if (location.hash === "#/active") {
+    renderTodos(todos.filter((todo) => !todo.completed));
+  } else if (location.hash === "#/") {
+    renderTodos(todos);
+  } else if (location.hash === "#/completed") {
+    renderTodos(todos.filter((todo) => todo.completed));
+  }
 });
