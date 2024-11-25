@@ -195,7 +195,7 @@ async function serveContentsHandler(url, _req, res) {
     const filePath = path.join(
       __dirname,
       "contents",
-      reqPath === "/" ? "index.html" : path.join(...reqPath.split("/")),
+      reqPath === "/" ? "index.html" : path.join(...reqPath.split("/"))
     );
 
     const content = await fs.readFile(filePath);
@@ -231,7 +231,7 @@ function cookieAuthzMiddleware(_url, req, res, params) {
   // HttpOnly を有効にしてクライアントの JavaScript から Cookie を参照できないようにする
   res.setHeader(
     "Set-Cookie",
-    `sid=${encodeURIComponent(sid)}; SameSite=Lax; Path=/; HttpOnly;`,
+    `sid=${encodeURIComponent(sid)}; SameSite=Lax; Path=/; HttpOnly;`
   );
   return true;
 }
@@ -354,7 +354,7 @@ async function main() {
         ["POST", "/api/tasks", createTaskHandler, authz, chaos],
         ["PATCH", "/api/tasks/{id}", patchTaskHandler, authz, chaos],
         ["DELETE", "/api/tasks/{id}", deleteTaskHandler, authz, chaos],
-        ["GET", "/*", serveContentsHandler, authz],
+        ["GET", "/*", serveContentsHandler, authz]
       )(req, res);
     })
     .listen(3000);
