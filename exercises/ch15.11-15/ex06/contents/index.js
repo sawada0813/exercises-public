@@ -3,11 +3,11 @@ const list = document.querySelector("#todo-list");
 const input = document.querySelector("#new-todo");
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const initItems = window.localStorage;
+  const initItems = window.sessionStorage;
   const keys = Object.keys(initItems);
   console.log(keys);
   keys.map((key) => {
-    appendToDoItem({ id: key, ...JSON.parse(localStorage.getItem(key)) });
+    appendToDoItem({ id: key, ...JSON.parse(sessionStorage.getItem(key)) });
   });
 });
 
@@ -56,12 +56,12 @@ form.addEventListener("submit", (e) => {
 
   // setItem(keyName, keyValue)
   appendToDoItem({
-    id: window.localStorage.length,
+    id: window.sessionStorage.length,
     name: todo,
     status: "active",
   });
-  window.localStorage.setItem(
-    window.localStorage.length,
+  window.sessionStorage.setItem(
+    window.sessionStorage.length,
     JSON.stringify({ name: todo, status: "active" }),
   );
 });
@@ -80,7 +80,7 @@ function appendToDoItem(task) {
   toggle.addEventListener("change", (e) => {
     e.preventDefault();
 
-    const item = JSON.parse(window.localStorage.getItem(task.id));
+    const item = JSON.parse(window.sessionStorage.getItem(task.id));
     if (item.status === "completed") {
       item.status = "active";
       label.style.textDecorationLine = "none";
@@ -88,14 +88,14 @@ function appendToDoItem(task) {
       item.status = "completed";
       label.style.textDecorationLine = "line-through";
     }
-    window.localStorage.setItem(task.id, JSON.stringify(item));
+    window.sessionStorage.setItem(task.id, JSON.stringify(item));
   });
 
   const destroy = document.createElement("button");
   destroy.addEventListener("click", (e) => {
     e.preventDefault();
 
-    window.localStorage.removeItem(task.id);
+    window.sessionStorage.removeItem(task.id);
     elem.remove();
   });
   toggle.type = "checkbox";
