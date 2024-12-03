@@ -2,54 +2,52 @@ const form = document.querySelector("#new-todo-form");
 const list = document.querySelector("#todo-list");
 const input = document.querySelector("#new-todo");
 
-const retryWithExponentialBackoff = async (func, maxRetry) => {
-  let interval = 1000;
-  let numOfCall = 0;
 
-  function retry() {
-    func.then((response) => {
+async function retryFetchWithExponentialBackoff(url, options) {
+  const maxRetry = 5
+  const controller = new AbortController()
+  const timerId = setTimeout(() => controller.abort(), 3000)
+
+  async function retry(retryCount) {
+    try {
+      const response = await fetch(url, { ...options, signal: controller.signal })
+      clearTimeout(timerId)
       if (response.ok) {
-        return response;
+        return response
       } else {
-        if (maxRetry <= numOfCall) {
-          return;
+        if (retryCount < maxRetry) {
+          await new Promise((resolve) =>
+            setTimeout(resolve, Math.pow(2, retryCount) * 1000)
+          )
+          return retry(retryCount + 1)
+        } else {
+          throw new Error('Failed to fetch data')
         }
-        numOfCall++;
-        interval *= 2;
-        setTimeout(retry, interval);
       }
-    });
+    } catch (e) {
+      clearTimeout(timerId)
+      if (retryCount < maxRetry) {
+        await new Promise((resolve) =>
+          setTimeout(resolve, Math.pow(2, retryCount) * 1000)
+        )
+        return retry(retryCount + 1)
+      } else {
+        throw new Error('Failed to fetch data')
+      }
+    }
   }
-  return retry();
-};
-
-// 書籍より
-function fetchWithTimeout(url, options = {}) {
-  if (options.timeout) {
-    let controller = new AbortController();
-    options.signal = controller.signal;
-    setTimeout(() => {
-      controller.abort();
-      alert("Request timed out.");
-    }, options.timeout);
-  }
-  return fetch(url, options);
+  return await retry(0)
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
   // TODO: ここで API を呼び出してタスク一覧を取得し、
   // 成功したら取得したタスクを appendToDoItem で ToDo リストの要素として追加しなさい
-  retryWithExponentialBackoff(
-    fetchWithTimeout("/api/tasks", { timeout: 3000 }),
-    // fetch("/api/tasks"),
-    10
-  )
+  retryFetchWithExponentialBackoff('/api/tasks', {})
     .then((response) => {
-      console.log(response);
-      response.json();
+      return response.json()
     })
     .then((json) => {
-      json.items.forEach((element) => appendToDoItem(element));
+      json.items.forEach((element) => appendToDoItem(element))
     })
     .catch((e) => {
       alert(e);
@@ -75,7 +73,6 @@ form.addEventListener("submit", (e) => {
   fetch("/api/tasks", { method: "POST", body: JSON.stringify({ name: todo }) })
     .then((response) => response.json())
     .then((json) => {
-      console.log(json);
       appendToDoItem(json);
     })
     .catch((e) => alert(e));
@@ -100,23 +97,30 @@ function appendToDoItem(task) {
     // change イベントが通知される前の status が active かどうか
     let isActive = true;
     // toggleの状態をサーバーから取得する
-    fetch("/api/tasks/" + task.id)
+    retryFetchWithExponentialBackoff('/api/tasks/' + task.id)
       .then((response) => response.json())
       .then((json) => {
-        isActive = json.status === "active";
+        isActive = json.status === 'active'
+        return
       })
       // 更新する
       .then(() => {
-        fetch("/api/tasks/" + task.id, {
-          method: "PATCH",
+        retryFetchWithExponentialBackoff('/api/tasks/' + task.id, {
+          method: 'PATCH',
           body: JSON.stringify({
             name: task.name,
-            status: isActive ? "completed" : "active",
+            status: isActive ? 'completed' : 'active',
           }),
-        }).then((e) => {
-          label.style.textDecorationLine = "line-through";
-        });
-      });
+        })
+        .then((response) => response.json())
+        .then((e) => {
+          label.style.textDecorationLine = e.status === "completed" ? 'line-through' : 'none'
+          return 
+        }).catch((e)=>{
+          alert(e)
+          toggle.checked = !toggle.checked
+        })
+      })
   });
 
   const destroy = document.createElement("button");
@@ -125,11 +129,11 @@ function appendToDoItem(task) {
   destroy.addEventListener("click", (e) => {
     e.preventDefault();
 
-    fetch("/api/tasks/" + task.id, {
-      method: "DELETE",
+    retryFetchWithExponentialBackoff('/api/tasks/' + task.id, {
+      method: 'DELETE',
     }).then((e) => {
-      elem.remove();
-    });
+      elem.remove()
+    })
   });
 
   // TODO: elem 内に toggle, label, destroy を追加しなさい

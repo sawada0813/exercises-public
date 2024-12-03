@@ -12,10 +12,10 @@ const wss = new WebSocketServer({ port });
 
 // ライフゲームのセル (true or false) をランダムに初期化する
 let grid = new Array(ROWS)
-.fill(null)
-.map(() =>
-  new Array(COLS).fill(null).map(() => !!Math.floor(Math.random() * 2))
-);
+  .fill(null)
+  .map(() =>
+    new Array(COLS).fill(null).map(() => !!Math.floor(Math.random() * 2)),
+  );
 // 停止状態
 let paused = true;
 
@@ -62,6 +62,27 @@ function updateGrid(grid) {
     for (let col = 0; col < COLS; col++) {
       // 周囲のセルの生存数を数えて nextGrid[row][col] に true or false を設定する
       //（15.04-10.10の実装を利用）
+      let count = 0;
+      for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+          if (row + i < 0 || col + j < 0 || (i === 0 && j === 0)) continue;
+          if (grid[row + i]?.[col + j] === true) {
+            count++;
+          }
+        }
+      }
+      // 割り当て
+      let isAlive = false;
+      if (grid[row][col] == false && count == 3) {
+        isAlive = true;
+      } else if (grid[row][col] == true) {
+        if (count < 2 || 3 < count) {
+          isAlive = false;
+        } else if (count === 2 || count === 3) {
+          isAlive = true;
+        }
+      }
+      nextGrid[row][col] = isAlive;
     }
   }
   return nextGrid;
