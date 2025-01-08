@@ -31,3 +31,27 @@ async function startChild() {
 }
 
 // TODO: ここに処理を書く
+process.on("SIGINT", () => {
+  console.log("Received SIGINT. Sending SIGINT to child process...");
+  child.kill("SIGINT");
+  child.on("close", () => {
+    process.exit(0);
+  });
+});
+
+process.on("SIGTERM", () => {
+  console.log("Receive SIGTERM. Sending SIGTERM to child process...");
+  child.kill("SIGTERM");
+  child.on("close", () => {
+    process.exit(0);
+  });
+});
+
+while (true) {
+  const [code, signal] = await startChild();
+  if (code === 0) {
+    console.log("Child process exited normally.");
+    break;
+  }
+  console.log(`Child process exited with code ${code}. Restarting...`);
+}

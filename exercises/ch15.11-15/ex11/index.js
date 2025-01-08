@@ -113,15 +113,15 @@ class PageState {
 
 // 写経したけど使ってない
 const ROWS = 3,
-  COLS = 4
-  // NUMWORKERS = navigator.hardwareConcurrency || 2;
+  COLS = 4;
+// NUMWORKERS = navigator.hardwareConcurrency || 2;
 
 class SierpinskiCanvas {
   constructor(canvas) {
-    this.canvas = canvas
-    this.context = canvas.getContext('2d')
-    this.worker = new Worker('./worker.js')
-    this.setSize()
+    this.canvas = canvas;
+    this.context = canvas.getContext("2d");
+    this.worker = new Worker("./worker.js");
+    this.setSize();
 
     // this.worker.postMessage({ x: 300, y: 300, size: 300, depth: 5 })
     this.worker.postMessage({
@@ -129,37 +129,39 @@ class SierpinskiCanvas {
       width: this.canvas.width,
       size: 300,
       depth: 5,
-    })
+    });
     this.worker.onmessage = (message) => {
-      this.image = message.data
-      this.render()
-    }
+      this.image = message.data;
+      this.render();
+    };
 
-    window.addEventListener('resize', () => {this.setSize()})
-    this.render()
+    window.addEventListener("resize", () => {
+      this.setSize();
+    });
+    this.render();
   }
 
   setSize() {
-    this.canvas.width = window.innerWidth
-    this.canvas.height = window.innerHeight
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
     this.worker.postMessage({
       height: this.canvas.height,
       width: this.canvas.width,
       size: 300,
       depth: 5,
-    })
-    this.render()
+    });
+    this.render();
   }
 
   render() {
-    if (!this.image) return 
-    this.context.drawImage(this.image, 0, 0)
+    if (!this.image) return;
+    this.context.drawImage(this.image, 0, 0);
   }
 }
 
-const canvas = document.createElement('canvas')
-canvas.width = 600
-canvas.height = 600
-new SierpinskiCanvas(canvas)
+const canvas = document.createElement("canvas");
+canvas.width = 600;
+canvas.height = 600;
+new SierpinskiCanvas(canvas);
 
-document.body.append(canvas)
+document.body.append(canvas);

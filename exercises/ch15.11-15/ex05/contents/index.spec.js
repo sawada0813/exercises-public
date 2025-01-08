@@ -44,7 +44,6 @@ function queryToDo(page, index) {
   return page.getByRole("listitem").nth(index);
 }
 
-
 // なぜか通らない
 test.describe("simple todo app", () => {
   test.beforeEach(async ({ page }) => {
