@@ -1,9 +1,6 @@
-import {
-  PriorityTask,
-  TaskManager,
-  isLowOrCompletedTask,
-  not,
-} from "./task.ts";
+import { PriorityTask, TaskManager, isLowOrCompletedTask, not } from "./task";
+// error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.
+// tsconfig.json で設定し直しても解決せず…
 
 const user1 = { id: 1, name: "Alice" };
 const user2 = { id: 2, name: "Bob" };
@@ -43,3 +40,5 @@ taskManager.completeTask("質問表を確認する");
 
 console.log(taskManager.getTasks());
 console.log(taskManager.getTasks(not(isLowOrCompletedTask)));
+
+// npx tsc ex09/caller.ts で実行

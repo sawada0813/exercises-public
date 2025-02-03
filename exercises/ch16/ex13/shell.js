@@ -69,8 +69,8 @@ async function runcmd(cmd, stdin = null, stdout = null) {
       {
         // FIXME: ここを実装してね (2行程度)
         // HINT: cmd.file のストリームを createWriteStream で作成し runcmd を再帰的に呼び出す
-        const stream = fs.createWriteStream(cmd.file)
-        await runcmd(cmd.cmd, stdin, stream)
+        const stream = fs.createWriteStream(cmd.file);
+        await runcmd(cmd.cmd, stdin, stream);
       }
       break;
 
@@ -78,8 +78,8 @@ async function runcmd(cmd, stdin = null, stdout = null) {
       {
         // FIXME: ここを実装してね (2行程度)
         // HINT: cmd.file のストリームを createReadStream で作成し runcmd を再帰的に呼び出す
-        const stream = fs.createReadStream(cmd.file)
-        await runcmd(cmd.cmd, stream, stdout)
+        const stream = fs.createReadStream(cmd.file);
+        await runcmd(cmd.cmd, stream, stdout);
       }
       break;
 

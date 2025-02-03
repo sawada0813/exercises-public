@@ -1,7 +1,6 @@
 {
   "editor.formatOnSave": true,
-  "playwright.env": {
-    
-
-  }
+  "playwright.env": {},
+  "debug.javascript.usePreview": false,
+  "debug.allowBreakpointsEverywhere": true
 }

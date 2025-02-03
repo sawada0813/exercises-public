@@ -73,10 +73,10 @@ function serve(rootDirectory, port) {
         // })
 
         try {
-          const stream = fs.createReadStream(filename)
+          const stream = fs.createReadStream(filename);
           response.setHeader("Content-Type", type);
           response.writeHeader(200);
-          stream.pipe(response)
+          stream.pipe(response);
         } catch (error) {
           response.setHeader("Content-Type", "text/plain; charset=UTF-8");
           response.writeHeader(404);

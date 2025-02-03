@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Chrome",
+      "type": "pwa-chrome", // chromeも可
+      "request": "launch",
+      "url": "http://localhost:9223", // webpack.debug.config.jsで指定したポート番号
+      "webRoot": "${workspaceFolder}",
+      "sourceMapPathOverrides": {
+        "webpack:///./*": "${webRoot}/react/*"
+      }
+    }
+  ]
+}
