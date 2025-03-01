@@ -1,8 +1,9 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 
 export default function Pad(props: { id: number }) {
-  const [audioUrl, setAudioUrl] = React.useState<string | null>(null);
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [color, setColor] = useState("bg-blue-500");
 
   const playAudio = (audioFile: string) => {
     const audio = new Audio(audioFile);
@@ -10,7 +11,6 @@ export default function Pad(props: { id: number }) {
   };
 
   const handleFileChange = (event) => {
-    console.log(event.target.files);
     const file = event.target.files[0];
     if (file && file.type === "audio/x-m4a") {
       const fileUrl = URL.createObjectURL(file);
@@ -21,17 +21,20 @@ export default function Pad(props: { id: number }) {
   };
 
   const onClick = () => {
-    console.log(audioUrl);
     if (audioUrl === null) {
       alert("音声ファイルを選択してください");
     } else {
       playAudio(audioUrl);
+      setColor("bg-blue-200");
+      setTimeout(() => {
+        setColor("bg-blue-500");
+      }, 100);
     }
   };
 
   return (
     <>
-      <div className='bg-blue-500 p-4' onClick={onClick}>
+      <div className={`${color} p-4`} onClick={onClick}>
         Box {props.id}
       </div>
       <input type='file' accept='audio/m4a' onChange={handleFileChange} />
