@@ -5,6 +5,7 @@ export default function Home() {
   return (
     <div>
       <SoundPads />
+      <p>Press r key to record beat</p>
       <Clock />
     </div>
   );
