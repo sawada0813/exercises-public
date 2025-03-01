@@ -4,8 +4,8 @@ import SoundPads from "./soundPads";
 export default function Home() {
   return (
     <div>
-      <Clock />
       <SoundPads />
+      <Clock />
     </div>
   );
 }
