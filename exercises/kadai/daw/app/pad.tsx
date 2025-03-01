@@ -11,6 +11,7 @@ export default function Pad(props: { id: number }) {
   useEffect(() => {
     if (isRecording) {
       const startTime = Date.now();
+      setRecordedBeats([]);
       setStartTime(startTime);
       setTimeout(() => {});
     }
@@ -46,6 +47,9 @@ export default function Pad(props: { id: number }) {
     if (audioUrl) {
       window.addEventListener("keydown", handleKeyDown);
     }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [audioUrl, props.id, onClick, isRecording]);
 
   const playAudio = (audioFile: string) => {
