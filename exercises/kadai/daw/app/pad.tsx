@@ -7,6 +7,22 @@ export default function Pad(props: { id: number }) {
   const [isRecording, setIsRecording] = useState(false);
   const [recordedBeats, setRecordedBeats] = useState<number[]>([]);
   const [startTime, setStartTime] = useState<number | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    if (isPlaying && audioUrl) {
+      recordedBeats.forEach((beat) => {
+        setTimeout(() => {
+          playAudio(audioUrl);
+          setColor("bg-blue-200");
+          setTimeout(() => {
+            setColor("bg-blue-500");
+          }, 100);
+        }, beat);
+      });
+      setIsPlaying(false);
+    }
+  }, [isPlaying]);
 
   useEffect(() => {
     if (isRecording) {
@@ -35,11 +51,14 @@ export default function Pad(props: { id: number }) {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      event.preventDefault();
       if (event.key === "r" && !isRecording) {
         setIsRecording(true);
       } else if (event.key === "r" && isRecording) {
         setIsRecording(false);
-        console.log(recordedBeats);
+        setIsPlaying(true);
+      } else if (event.key === " ") {
+        setIsPlaying(true);
       } else if (event.key === props.id.toString()) {
         onClick();
       }
