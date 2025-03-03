@@ -18,18 +18,23 @@ export default function Piano() {
   return (
     <div>
       <div className='flex justify-center items-center space-x-1'>
-        <Note note='C' audioUrl={audioUrl} tune={"a"} />
-        <Note note='C#' audioUrl={audioUrl} tune={"w"} />
-        <Note note='D' audioUrl={audioUrl} tune={"s"} />
-        <Note note='D#' audioUrl={audioUrl} tune={"e"} />
-        <Note note='E' audioUrl={audioUrl} tune={"d"} />
-        <Note note='F' audioUrl={audioUrl} tune={"f"} />
-        <Note note='F#' audioUrl={audioUrl} tune={"t"} />
-        <Note note='G' audioUrl={audioUrl} tune={"g"} />
-        <Note note='G#' audioUrl={audioUrl} tune={"y"} />
-        <Note note='A' audioUrl={audioUrl} tune={"h"} />
-        <Note note='A#' audioUrl={audioUrl} tune={"u"} />
-        <Note note='B' audioUrl={audioUrl} tune={"j"} />
+        <Note note='C1' audioUrl={audioUrl} tune={"a"} />
+        <Note note='C#1' audioUrl={audioUrl} tune={"w"} />
+        <Note note='D1' audioUrl={audioUrl} tune={"s"} />
+        <Note note='D#1' audioUrl={audioUrl} tune={"e"} />
+        <Note note='E1' audioUrl={audioUrl} tune={"d"} />
+        <Note note='F1' audioUrl={audioUrl} tune={"f"} />
+        <Note note='F#1' audioUrl={audioUrl} tune={"t"} />
+        <Note note='G1' audioUrl={audioUrl} tune={"g"} />
+        <Note note='G#1' audioUrl={audioUrl} tune={"y"} />
+        <Note note='A1' audioUrl={audioUrl} tune={"h"} />
+        <Note note='A#1' audioUrl={audioUrl} tune={"u"} />
+        <Note note='B1' audioUrl={audioUrl} tune={"j"} />
+        <Note note='C2' audioUrl={audioUrl} tune={"k"} />
+        <Note note='C#2' audioUrl={audioUrl} tune={"o"} />
+        <Note note='D2' audioUrl={audioUrl} tune={"l"} />
+        <Note note='D#2' audioUrl={audioUrl} tune={"p"} />
+        <Note note='E2' audioUrl={audioUrl} tune={";"} />
       </div>
       <input
         type='file'
