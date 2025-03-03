@@ -8,6 +8,7 @@ export default function Pad(props: { id: number }) {
   const [recordedBeats, setRecordedBeats] = useState<number[]>([]);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [fileName, setFileName] = useState("");
 
   useEffect(() => {
     if (isPlaying && audioUrl) {
@@ -81,21 +82,22 @@ export default function Pad(props: { id: number }) {
     if ((file && file.type === "audio/x-m4a") || file.type === "audio/wav") {
       const fileUrl = URL.createObjectURL(file);
       setAudioUrl(fileUrl);
+      setFileName(file.name);
     } else {
       alert("m4aファイルを選択してください");
     }
   };
 
   return (
-    <>
+    <div className='flex flex-col'>
       <div className={`${color} p-4`} onClick={onClick}>
-        Box {props.id}
+        {audioUrl ? fileName : "Blank"}
       </div>
       <input
         type='file'
         accept='audio/m4a, audio/wav'
         onChange={handleFileChange}
       />
-    </>
+    </div>
   );
 }
