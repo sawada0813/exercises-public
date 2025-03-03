@@ -1,12 +1,85 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 type NoteProps = {
   note: string;
   audioUrl: string | null;
+  tune: string;
 };
 
-export default function Note({ note, audioUrl }: NoteProps) {
+export default function Note({ note, audioUrl, tune }: NoteProps) {
+  const [isRecording, setIsRecording] = useState(false);
+  const [color, setColor] = useState("bg-gray-500");
+  const [recordedBeats, setRecordedBeats] = useState<number[]>([]);
+  const [startTime, setStartTime] = useState<number | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const playAudio = (note: string) => {
+    const audioElement = generateNote(note);
+    // 音声を再生
+    if (audioElement) {
+      audioElement.play();
+    }
+  };
+
+  const handleClick = (note: string) => {
+    // keydown イベントを記録
+    if (startTime) {
+      setRecordedBeats([...recordedBeats, Date.now() - startTime]);
+    }
+    playAudio(note);
+    setColor("bg-gray-200");
+    setTimeout(() => {
+      setColor("bg-gray-500");
+    }, 100);
+  };
+
+  useEffect(() => {
+    if (isPlaying && audioUrl) {
+      recordedBeats.forEach((beat) => {
+        setTimeout(() => {
+          playAudio(note);
+          setColor("bg-gray-200");
+          setTimeout(() => {
+            setColor("bg-gray-500");
+          }, 100);
+        }, beat);
+      });
+      setIsPlaying(false);
+    }
+  }, [isPlaying]);
+
+  useEffect(() => {
+    if (isRecording) {
+      const startTime = Date.now();
+      setRecordedBeats([]);
+      setStartTime(startTime);
+      setTimeout(() => {});
+    }
+  }, [isRecording]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      event.preventDefault();
+      if (event.key === "r" && !isRecording) {
+        setIsRecording(true);
+      } else if (event.key === "r" && isRecording) {
+        setIsRecording(false);
+        setIsPlaying(true);
+      } else if (event.key === " ") {
+        setIsPlaying(true);
+      } else if (event.key === tune) {
+        handleClick(note);
+      }
+    };
+    if (audioUrl) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [audioUrl, handleClick, isRecording]);
+
   const generateNote = (note: string) => {
     const audioContext = new window.AudioContext();
     if (audioUrl === null) return;
@@ -44,20 +117,9 @@ export default function Note({ note, audioUrl }: NoteProps) {
     }
   };
 
-  const playAudio = (note: string) => {
-    const audioElement = generateNote(note);
-    // 音声を再生
-    if (audioElement) {
-      audioElement.play();
-    }
-  };
-  const handleClick = (note: string) => {
-    playAudio(note);
-  };
-
   return (
     <div
-      className='w-12 h-48 bg-white border-2 border-black'
+      className={`w-12 h-48 bg-white border-2 border-black ${color}`}
       onClick={() => handleClick(note)}
     >
       {note}
