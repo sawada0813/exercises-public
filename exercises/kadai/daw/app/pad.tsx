@@ -1,13 +1,17 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
 
-export default function Pad(props: { id: number }) {
+type PadProps = {
+  id: number;
+  isRecording: boolean;
+  isPlaying: boolean;
+};
+
+export default function Pad({ id, isRecording, isPlaying }: PadProps) {
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [color, setColor] = useState("bg-gray-500");
-  const [isRecording, setIsRecording] = useState(false);
   const [recordedBeats, setRecordedBeats] = useState<number[]>([]);
   const [startTime, setStartTime] = useState<number | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [fileName, setFileName] = useState("");
 
   useEffect(() => {
@@ -21,7 +25,7 @@ export default function Pad(props: { id: number }) {
           }, 100);
         }, beat);
       });
-      setIsPlaying(false);
+      // setIsPlaying(false);
     }
   }, [isPlaying]);
 
@@ -30,7 +34,6 @@ export default function Pad(props: { id: number }) {
       const startTime = Date.now();
       setRecordedBeats([]);
       setStartTime(startTime);
-      setTimeout(() => {});
     }
   }, [isRecording]);
 
@@ -53,14 +56,7 @@ export default function Pad(props: { id: number }) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       event.preventDefault();
-      if (event.key === "r" && !isRecording) {
-        setIsRecording(true);
-      } else if (event.key === "r" && isRecording) {
-        setIsRecording(false);
-        setIsPlaying(true);
-      } else if (event.key === " ") {
-        setIsPlaying(true);
-      } else if (event.key === props.id.toString()) {
+      if (event.key === id.toString()) {
         onClick();
       }
     };
@@ -70,14 +66,15 @@ export default function Pad(props: { id: number }) {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [audioUrl, props.id, onClick, isRecording]);
+  }, [audioUrl, id, onClick, isRecording]);
 
   const playAudio = (audioFile: string) => {
     const audio = new Audio(audioFile);
     audio.play();
   };
 
-  const handleFileChange = (event) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleFileChange = (event: any) => {
     const file = event.target.files[0];
     if ((file && file.type === "audio/x-m4a") || file.type === "audio/wav") {
       const fileUrl = URL.createObjectURL(file);
@@ -91,7 +88,7 @@ export default function Pad(props: { id: number }) {
   return (
     <div className='flex flex-col'>
       <div className={`${color} p-4`} onClick={onClick}>
-        {props.id}: {audioUrl ? fileName : "Blank"}
+        {id}: {audioUrl ? fileName : "Blank"}
       </div>
       <input
         type='file'
