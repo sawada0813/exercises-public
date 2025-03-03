@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from "react";
 
 export default function Pad(props: { id: number }) {
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
-  const [color, setColor] = useState("bg-blue-500");
+  const [color, setColor] = useState("bg-gray-500");
   const [isRecording, setIsRecording] = useState(false);
   const [recordedBeats, setRecordedBeats] = useState<number[]>([]);
   const [startTime, setStartTime] = useState<number | null>(null);
@@ -15,9 +15,9 @@ export default function Pad(props: { id: number }) {
       recordedBeats.forEach((beat) => {
         setTimeout(() => {
           playAudio(audioUrl);
-          setColor("bg-blue-200");
+          setColor("bg-gray-200");
           setTimeout(() => {
-            setColor("bg-blue-500");
+            setColor("bg-gray-500");
           }, 100);
         }, beat);
       });
@@ -43,9 +43,9 @@ export default function Pad(props: { id: number }) {
         setRecordedBeats([...recordedBeats, Date.now() - startTime]);
       }
       playAudio(audioUrl);
-      setColor("bg-blue-200");
+      setColor("bg-gray-200");
       setTimeout(() => {
-        setColor("bg-blue-500");
+        setColor("bg-gray-500");
       }, 100);
     }
   }, [audioUrl, isRecording, recordedBeats, startTime]);
@@ -91,7 +91,7 @@ export default function Pad(props: { id: number }) {
   return (
     <div className='flex flex-col'>
       <div className={`${color} p-4`} onClick={onClick}>
-        {audioUrl ? fileName : "Blank"}
+        {props.id}: {audioUrl ? fileName : "Blank"}
       </div>
       <input
         type='file'
