@@ -19,11 +19,16 @@ export default function Piano() {
     <div>
       <div className='flex justify-center items-center space-x-1'>
         <Note note='C' audioUrl={audioUrl} tune={"a"} />
+        <Note note='C#' audioUrl={audioUrl} tune={"w"} />
         <Note note='D' audioUrl={audioUrl} tune={"s"} />
+        <Note note='D#' audioUrl={audioUrl} tune={"e"} />
         <Note note='E' audioUrl={audioUrl} tune={"d"} />
         <Note note='F' audioUrl={audioUrl} tune={"f"} />
+        <Note note='F#' audioUrl={audioUrl} tune={"t"} />
         <Note note='G' audioUrl={audioUrl} tune={"g"} />
+        <Note note='G#' audioUrl={audioUrl} tune={"y"} />
         <Note note='A' audioUrl={audioUrl} tune={"h"} />
+        <Note note='A#' audioUrl={audioUrl} tune={"u"} />
         <Note note='B' audioUrl={audioUrl} tune={"j"} />
       </div>
       <input

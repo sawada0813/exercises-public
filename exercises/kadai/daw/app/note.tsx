@@ -9,10 +9,15 @@ type NoteProps = {
 
 export default function Note({ note, audioUrl, tune }: NoteProps) {
   const [isRecording, setIsRecording] = useState(false);
-  const [color, setColor] = useState("bg-gray-500");
+  const [color, setColor] = useState(
+    note.includes("#") ? "bg-black" : "bg-white"
+  );
   const [recordedBeats, setRecordedBeats] = useState<number[]>([]);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const textColor = note.includes("#") ? "text-white" : "text-black";
+
+  console.log(note.includes("#"));
 
   const playAudio = (note: string) => {
     const audioElement = generateNote(note);
@@ -28,9 +33,10 @@ export default function Note({ note, audioUrl, tune }: NoteProps) {
       setRecordedBeats([...recordedBeats, Date.now() - startTime]);
     }
     playAudio(note);
+    const prevColor = color;
     setColor("bg-gray-200");
     setTimeout(() => {
-      setColor("bg-gray-500");
+      setColor(prevColor);
     }, 100);
   };
 
@@ -39,9 +45,10 @@ export default function Note({ note, audioUrl, tune }: NoteProps) {
       recordedBeats.forEach((beat) => {
         setTimeout(() => {
           playAudio(note);
+          const prevColor = color;
           setColor("bg-gray-200");
           setTimeout(() => {
-            setColor("bg-gray-500");
+            setColor(prevColor);
           }, 100);
         }, beat);
       });
@@ -94,8 +101,14 @@ export default function Note({ note, audioUrl, tune }: NoteProps) {
       case "C":
         audioElement.playbackRate = 1.0;
         return audioElement;
+      case "C#":
+        audioElement.playbackRate = 1.059463;
+        return audioElement;
       case "D":
         audioElement.playbackRate = 1.122462;
+        return audioElement;
+      case "D#":
+        audioElement.playbackRate = 1.189207;
         return audioElement;
       case "E":
         audioElement.playbackRate = 1.259921;
@@ -103,11 +116,20 @@ export default function Note({ note, audioUrl, tune }: NoteProps) {
       case "F":
         audioElement.playbackRate = 1.33484;
         return audioElement;
+      case "F#":
+        audioElement.playbackRate = 1.414214;
+        return audioElement;
       case "G":
         audioElement.playbackRate = 1.498307;
         return audioElement;
+      case "G#":
+        audioElement.playbackRate = 1.587401;
+        return audioElement;
       case "A":
         audioElement.playbackRate = 1.681793;
+        return audioElement;
+      case "A#":
+        audioElement.playbackRate = 1.781797;
         return audioElement;
       case "B":
         audioElement.playbackRate = 1.887749;
@@ -119,7 +141,7 @@ export default function Note({ note, audioUrl, tune }: NoteProps) {
 
   return (
     <div
-      className={`w-12 h-48 bg-white border-2 border-black ${color}`}
+      className={`w-12 h-48 ${color} border-2 border-black text-center ${textColor}`}
       onClick={() => handleClick(note)}
     >
       {note}
