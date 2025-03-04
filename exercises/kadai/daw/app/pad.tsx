@@ -5,28 +5,50 @@ type PadProps = {
   id: number;
   isRecording: boolean;
   isPlaying: boolean;
+  stopTime: number | null;
 };
 
-export default function Pad({ id, isRecording, isPlaying }: PadProps) {
+export default function Pad({
+  id,
+  isRecording,
+  isPlaying,
+  stopTime,
+}: PadProps) {
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [color, setColor] = useState("bg-gray-500");
   const [recordedBeats, setRecordedBeats] = useState<number[]>([]);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [fileName, setFileName] = useState("");
 
+  const sleep = (time: number) => new Promise((r) => setTimeout(r, time));
+
   useEffect(() => {
-    if (isPlaying && audioUrl) {
-      recordedBeats.forEach((beat) => {
-        setTimeout(() => {
-          playAudio(audioUrl);
-          setColor("bg-gray-200");
+    (async () => {
+      let timerID;
+      if (isPlaying && audioUrl && stopTime) {
+        let index = 0;
+        const playSound = async () => {
           setTimeout(() => {
-            setColor("bg-gray-500");
-          }, 100);
-        }, beat);
-      });
-      // setIsPlaying(false);
-    }
+            playAudio(audioUrl);
+            setColor("bg-gray-200");
+            setTimeout(() => {
+              setColor("bg-gray-500");
+            }, 1);
+          });
+          index = (index + 1) % recordedBeats.length;
+          if (index === 0) {
+            await sleep(stopTime - recordedBeats[recordedBeats.length - 1]);
+          }
+          timerID = setTimeout(
+            playSound,
+            recordedBeats[index] - recordedBeats[index - 1]
+          );
+        };
+        timerID = setTimeout(playSound, recordedBeats[index]);
+      } else {
+        clearInterval(timerID);
+      }
+    })();
   }, [isPlaying]);
 
   useEffect(() => {
@@ -51,7 +73,7 @@ export default function Pad({ id, isRecording, isPlaying }: PadProps) {
         setColor("bg-gray-500");
       }, 100);
     }
-  }, [audioUrl, isRecording, recordedBeats, startTime]);
+  }, [audioUrl, recordedBeats, startTime]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

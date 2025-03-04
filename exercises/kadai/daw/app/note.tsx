@@ -5,16 +5,22 @@ type NoteProps = {
   note: string;
   audioUrl: string | null;
   tune: string;
+  isRecording: boolean;
+  isPlaying: boolean;
 };
 
-export default function Note({ note, audioUrl, tune }: NoteProps) {
-  const [isRecording, setIsRecording] = useState(false);
+export default function Note({
+  note,
+  audioUrl,
+  tune,
+  isRecording,
+  isPlaying,
+}: NoteProps) {
   const [color, setColor] = useState(
     note.includes("#") ? "bg-black" : "bg-white"
   );
   const [recordedBeats, setRecordedBeats] = useState<number[]>([]);
   const [startTime, setStartTime] = useState<number | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const textColor = note.includes("#") ? "text-white" : "text-black";
 
   const playAudio = (note: string) => {
@@ -50,7 +56,7 @@ export default function Note({ note, audioUrl, tune }: NoteProps) {
           }, 100);
         }, beat);
       });
-      setIsPlaying(false);
+      // setIsPlaying(false);
     }
   }, [isPlaying]);
 
@@ -66,14 +72,7 @@ export default function Note({ note, audioUrl, tune }: NoteProps) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       event.preventDefault();
-      if (event.key === "r" && !isRecording) {
-        setIsRecording(true);
-      } else if (event.key === "r" && isRecording) {
-        setIsRecording(false);
-        setIsPlaying(true);
-      } else if (event.key === " ") {
-        setIsPlaying(true);
-      } else if (event.key === tune) {
+      if (event.key === tune) {
         handleClick(note);
       }
     };

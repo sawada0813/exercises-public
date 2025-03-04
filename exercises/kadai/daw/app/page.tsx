@@ -3,11 +3,13 @@ import Clock from "./clock";
 import SoundPads from "./soundPads";
 import Piano from "./piano";
 import React, { useState, useEffect } from "react";
+import { start } from "repl";
 
 export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [startTime, setStartTime] = useState<number | null>(null);
+  const [stopTime, setStopTime] = useState<number | null>(null);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -18,12 +20,10 @@ export default function Home() {
       } else if (event.key === "r" && isRecording && startTime) {
         setIsRecording(false);
         setIsPlaying(true);
-        const endTime = Date.now();
-        setTimeout(() => {
-          setIsPlaying(false);
-        }, endTime - startTime);
-      } else if (event.key === " ") {
+        setStopTime(Date.now() - startTime);
+      } else if (event.key === " " && startTime) {
         setIsPlaying(true);
+        setStopTime(Date.now() - startTime);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -34,7 +34,11 @@ export default function Home() {
 
   return (
     <div>
-      <SoundPads isRecording={isRecording} isPlaying={isPlaying} />
+      <SoundPads
+        isRecording={isRecording}
+        isPlaying={isPlaying}
+        stopTime={stopTime}
+      />
       <Piano />
       <Clock />
       {isPlaying ? <p>Playing...</p> : null}
