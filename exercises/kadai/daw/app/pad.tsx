@@ -63,7 +63,7 @@ export default function Pad({
       alert("音声ファイルを選択してください");
     } else {
       // keydown イベントを記録
-      if (startTime) {
+      if (startTime && isRecording) {
         setRecordedBeats([...recordedBeats, Date.now() - startTime]);
       }
       playAudio(audioUrl);
@@ -72,7 +72,7 @@ export default function Pad({
         setColor("bg-gray-500");
       }, 100);
     }
-  }, [audioUrl, recordedBeats, startTime]);
+  }, [audioUrl, recordedBeats, startTime, isRecording]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

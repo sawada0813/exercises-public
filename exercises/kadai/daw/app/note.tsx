@@ -28,7 +28,7 @@ export default function Note({
 
   const handleClick = (note: string) => {
     // keydown イベントを記録
-    if (startTime) {
+    if (startTime && isRecording) {
       setRecordedBeats([...recordedBeats, Date.now() - startTime]);
     }
     playAudio(note);
