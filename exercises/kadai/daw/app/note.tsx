@@ -43,7 +43,6 @@ export default function Note({
 
   useEffect(() => {
     (async () => {
-      console.log(recordedBeats);
       let timerID;
       if (recordedBeats.length === 0) {
         return;
