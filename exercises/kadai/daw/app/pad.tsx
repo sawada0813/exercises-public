@@ -19,7 +19,6 @@ export default function Pad({
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [color, setColor] = useState("bg-gray-500");
   const [recordedBeats, setRecordedBeats] = useState<number[]>([]);
-  // const [startTime, setStartTime] = useState<number | null>(null);
   const [fileName, setFileName] = useState("");
 
   const sleep = (time: number) => new Promise((r) => setTimeout(r, time));

@@ -7,6 +7,8 @@ type NoteProps = {
   tune: string;
   isRecording: boolean;
   isPlaying: boolean;
+  stopTime: number | null;
+  startTime: number | null;
 };
 
 export default function Note({
@@ -24,14 +26,6 @@ export default function Note({
   const [recordedBeats, setRecordedBeats] = useState<number[]>([]);
   const textColor = note.includes("#") ? "text-white" : "text-black";
 
-  const playAudio = (note: string) => {
-    const audioElement = generateNote(note);
-    // 音声を再生
-    if (audioElement) {
-      audioElement.play();
-    }
-  };
-
   const handleClick = (note: string) => {
     // keydown イベントを記録
     if (startTime) {
@@ -45,26 +39,45 @@ export default function Note({
     }, 100);
   };
 
+  const sleep = (time: number) => new Promise((r) => setTimeout(r, time));
+
   useEffect(() => {
-    if (isPlaying && audioUrl) {
-      recordedBeats.forEach((beat) => {
-        setTimeout(() => {
+    (async () => {
+      console.log(recordedBeats);
+      let timerID;
+      if (recordedBeats.length === 0) {
+        return;
+      }
+      if (isPlaying && audioUrl && stopTime && startTime) {
+        let index = 0;
+        const playSound = async () => {
           playAudio(note);
           const prevColor = color;
           setColor("bg-gray-200");
           setTimeout(() => {
             setColor(prevColor);
-          }, 100);
-        }, beat);
-      });
-      // setIsPlaying(false);
-    }
-  }, [isPlaying]);
+          }, 1);
+          index = (index + 1) % recordedBeats.length;
+          if (index === 0) {
+            await sleep(stopTime - recordedBeats[recordedBeats.length - 1]);
+            timerID = setTimeout(playSound, recordedBeats[0]);
+          } else {
+            timerID = setTimeout(
+              playSound,
+              recordedBeats[index] - recordedBeats[index - 1]
+            );
+          }
+        };
+        timerID = setTimeout(playSound, recordedBeats[0]);
+      } else {
+        clearInterval(timerID);
+      }
+    })();
+  }, [isPlaying, startTime, stopTime, recordedBeats]);
 
   useEffect(() => {
     if (isRecording) {
       setRecordedBeats([]);
-      setTimeout(() => {});
     }
   }, [isRecording]);
 
@@ -147,6 +160,14 @@ export default function Note({
         return audioElement;
       default:
         return;
+    }
+  };
+
+  const playAudio = (note: string) => {
+    const audioElement = generateNote(note);
+    // 音声を再生
+    if (audioElement) {
+      audioElement.play();
     }
   };
 
