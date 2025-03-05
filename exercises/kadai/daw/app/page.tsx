@@ -3,7 +3,6 @@ import Clock from "./clock";
 import SoundPads from "./soundPads";
 import Piano from "./piano";
 import React, { useState, useEffect } from "react";
-import { start } from "repl";
 
 export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -37,6 +36,7 @@ export default function Home() {
       <SoundPads
         isRecording={isRecording}
         isPlaying={isPlaying}
+        startTime={startTime}
         stopTime={stopTime}
       />
       <Piano />

@@ -6,6 +6,7 @@ type PadProps = {
   isRecording: boolean;
   isPlaying: boolean;
   stopTime: number | null;
+  startTime: number | null;
 };
 
 export default function Pad({
@@ -13,11 +14,12 @@ export default function Pad({
   isRecording,
   isPlaying,
   stopTime,
+  startTime,
 }: PadProps) {
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [color, setColor] = useState("bg-gray-500");
   const [recordedBeats, setRecordedBeats] = useState<number[]>([]);
-  const [startTime, setStartTime] = useState<number | null>(null);
+  // const [startTime, setStartTime] = useState<number | null>(null);
   const [fileName, setFileName] = useState("");
 
   const sleep = (time: number) => new Promise((r) => setTimeout(r, time));
@@ -25,37 +27,37 @@ export default function Pad({
   useEffect(() => {
     (async () => {
       let timerID;
-      if (isPlaying && audioUrl && stopTime) {
+      if (isPlaying && audioUrl && stopTime && startTime) {
         let index = 0;
         const playSound = async () => {
+          playAudio(audioUrl);
+          setColor("bg-gray-200");
           setTimeout(() => {
-            playAudio(audioUrl);
-            setColor("bg-gray-200");
-            setTimeout(() => {
-              setColor("bg-gray-500");
-            }, 1);
-          });
+            setColor("bg-gray-500");
+          }, 1);
           index = (index + 1) % recordedBeats.length;
           if (index === 0) {
             await sleep(stopTime - recordedBeats[recordedBeats.length - 1]);
+            timerID = setTimeout(playSound, recordedBeats[0]);
+          } else {
+            timerID = setTimeout(
+              playSound,
+              recordedBeats[index] - recordedBeats[index - 1]
+            );
           }
-          timerID = setTimeout(
-            playSound,
-            recordedBeats[index] - recordedBeats[index - 1]
-          );
         };
-        timerID = setTimeout(playSound, recordedBeats[index]);
+        timerID = setTimeout(playSound, recordedBeats[0]);
       } else {
         clearInterval(timerID);
       }
     })();
-  }, [isPlaying]);
+  }, [isPlaying, startTime, stopTime, recordedBeats, audioUrl]);
 
   useEffect(() => {
     if (isRecording) {
-      const startTime = Date.now();
+      // const startTime = Date.now();
       setRecordedBeats([]);
-      setStartTime(startTime);
+      // setStartTime(startTime);
     }
   }, [isRecording]);
 
