@@ -1,4 +1,5 @@
 "use client";
+import { clear } from "console";
 import React, { useState, useEffect, useCallback } from "react";
 
 type PadProps = {
@@ -21,11 +22,33 @@ export default function Pad({
   const [recordedBeats, setRecordedBeats] = useState<number[]>([]);
   const [fileName, setFileName] = useState("");
 
-  const sleep = (time: number) => new Promise((r) => setTimeout(r, time));
+  const sleep = useCallback(
+    (time: number) => new Promise((r) => setTimeout(r, time)),
+    []
+  );
 
   useEffect(() => {
+    if (id === 1) {
+      console.log("useEffect");
+      console.log(isPlaying);
+    }
     (async () => {
       let timerID;
+      if (id === 1) {
+        console.log(timerID);
+      }
+      if (recordedBeats.length === 0) {
+        clearTimeout(timerID);
+        return;
+      }
+      if (!isPlaying) {
+        if (id === 1) {
+          console.log("!isPlaying");
+          console.log(timerID);
+        }
+        clearTimeout(timerID);
+        return;
+      }
       if (isPlaying && audioUrl && stopTime && startTime) {
         let index = 0;
         const playSound = async () => {
@@ -47,10 +70,14 @@ export default function Pad({
         };
         timerID = setTimeout(playSound, recordedBeats[0]);
       } else {
-        clearInterval(timerID);
+        if (id === 1) {
+          console.log("else");
+          console.log(timerID);
+        }
+        clearTimeout(timerID);
       }
     })();
-  }, [isPlaying, startTime, stopTime, recordedBeats, audioUrl]);
+  }, [isPlaying, startTime, stopTime, recordedBeats, audioUrl, sleep]);
 
   useEffect(() => {
     if (isRecording) {

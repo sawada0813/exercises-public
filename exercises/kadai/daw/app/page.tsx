@@ -16,28 +16,7 @@ export default function Home() {
     setIsPlaying(!isPlaying);
   }, [isPlaying]);
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      event.preventDefault();
-      if (event.key === "r" && !isRecording) {
-        setIsRecording(true);
-        setStartTime(Date.now());
-      } else if (event.key === "r" && isRecording && startTime) {
-        setIsRecording(false);
-        setIsPlaying(false);
-        setStopTime(Date.now() - startTime);
-      } else if (event.key === " " && startTime) {
-        setIsPlaying(true);
-        setStopTime(Date.now() - startTime);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isRecording, startTime, isPlaying, handlePlayPause]);
-
-  const handleRecord = () => {
+  const handleRecord = useCallback(() => {
     if (!isRecording) {
       setIsRecording(true);
       setIsPlaying(true);
@@ -47,7 +26,27 @@ export default function Home() {
       setIsRecording(false);
       setStopTime(Date.now() - startTime);
     }
-  };
+  }, [isRecording, startTime]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      event.preventDefault();
+      // if (event.key === "r" && !isRecording) {
+      if (event.key === "r") {
+        handleRecord();
+      } else if (event.key === " ") {
+        setIsPlaying(true);
+        if (startTime) setStopTime(Date.now() - startTime);
+        if (event.key === " " && isPlaying) {
+          setIsPlaying(false);
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isRecording, startTime, isPlaying, handlePlayPause, handleRecord]);
 
   return (
     <div>
