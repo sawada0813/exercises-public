@@ -15,12 +15,13 @@ export default function Note({
   tune,
   isRecording,
   isPlaying,
+  stopTime,
+  startTime,
 }: NoteProps) {
   const [color, setColor] = useState(
     note.includes("#") ? "bg-black" : "bg-white"
   );
   const [recordedBeats, setRecordedBeats] = useState<number[]>([]);
-  const [startTime, setStartTime] = useState<number | null>(null);
   const textColor = note.includes("#") ? "text-white" : "text-black";
 
   const playAudio = (note: string) => {
@@ -62,9 +63,7 @@ export default function Note({
 
   useEffect(() => {
     if (isRecording) {
-      const startTime = Date.now();
       setRecordedBeats([]);
-      setStartTime(startTime);
       setTimeout(() => {});
     }
   }, [isRecording]);

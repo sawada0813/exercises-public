@@ -5,9 +5,16 @@ import Note from "./note";
 type PianoProps = {
   isRecording: boolean;
   isPlaying: boolean;
+  stopTime: number | null;
+  startTime: number | null;
 };
 
-export default function Piano({ isRecording, isPlaying }: PianoProps) {
+export default function Piano({
+  isRecording,
+  isPlaying,
+  stopTime,
+  startTime,
+}: PianoProps) {
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
 
   const handleFileChange = (event) => {
@@ -29,6 +36,8 @@ export default function Piano({ isRecording, isPlaying }: PianoProps) {
           tune={"a"}
           isRecording={isRecording}
           isPlaying={isPlaying}
+          startTime={startTime}
+          stopTime={stopTime}
         />
         <Note
           note='C#1'
@@ -36,6 +45,8 @@ export default function Piano({ isRecording, isPlaying }: PianoProps) {
           tune={"w"}
           isRecording={isRecording}
           isPlaying={isPlaying}
+          startTime={startTime}
+          stopTime={stopTime}
         />
         <Note
           note='D1'
@@ -43,6 +54,8 @@ export default function Piano({ isRecording, isPlaying }: PianoProps) {
           tune={"s"}
           isRecording={isRecording}
           isPlaying={isPlaying}
+          startTime={startTime}
+          stopTime={stopTime}
         />
         <Note
           note='D#1'
@@ -50,6 +63,8 @@ export default function Piano({ isRecording, isPlaying }: PianoProps) {
           tune={"e"}
           isRecording={isRecording}
           isPlaying={isPlaying}
+          startTime={startTime}
+          stopTime={stopTime}
         />
         <Note
           note='E1'
@@ -57,6 +72,8 @@ export default function Piano({ isRecording, isPlaying }: PianoProps) {
           tune={"d"}
           isRecording={isRecording}
           isPlaying={isPlaying}
+          startTime={startTime}
+          stopTime={stopTime}
         />
         <Note
           note='F1'
@@ -64,6 +81,8 @@ export default function Piano({ isRecording, isPlaying }: PianoProps) {
           tune={"f"}
           isRecording={isRecording}
           isPlaying={isPlaying}
+          startTime={startTime}
+          stopTime={stopTime}
         />
         <Note
           note='F#1'
@@ -71,6 +90,8 @@ export default function Piano({ isRecording, isPlaying }: PianoProps) {
           tune={"t"}
           isRecording={isRecording}
           isPlaying={isPlaying}
+          startTime={startTime}
+          stopTime={stopTime}
         />
         <Note
           note='G1'
@@ -78,6 +99,8 @@ export default function Piano({ isRecording, isPlaying }: PianoProps) {
           tune={"g"}
           isRecording={isRecording}
           isPlaying={isPlaying}
+          startTime={startTime}
+          stopTime={stopTime}
         />
         <Note
           note='G#1'
@@ -85,6 +108,8 @@ export default function Piano({ isRecording, isPlaying }: PianoProps) {
           tune={"y"}
           isRecording={isRecording}
           isPlaying={isPlaying}
+          startTime={startTime}
+          stopTime={stopTime}
         />
         <Note
           note='A1'
@@ -92,6 +117,8 @@ export default function Piano({ isRecording, isPlaying }: PianoProps) {
           tune={"h"}
           isRecording={isRecording}
           isPlaying={isPlaying}
+          startTime={startTime}
+          stopTime={stopTime}
         />
         <Note
           note='A#1'
@@ -99,6 +126,8 @@ export default function Piano({ isRecording, isPlaying }: PianoProps) {
           tune={"u"}
           isRecording={isRecording}
           isPlaying={isPlaying}
+          startTime={startTime}
+          stopTime={stopTime}
         />
         <Note
           note='B1'
@@ -106,6 +135,8 @@ export default function Piano({ isRecording, isPlaying }: PianoProps) {
           tune={"j"}
           isRecording={isRecording}
           isPlaying={isPlaying}
+          startTime={startTime}
+          stopTime={stopTime}
         />
         <Note
           note='C2'
@@ -113,6 +144,8 @@ export default function Piano({ isRecording, isPlaying }: PianoProps) {
           tune={"k"}
           isRecording={isRecording}
           isPlaying={isPlaying}
+          startTime={startTime}
+          stopTime={stopTime}
         />
         <Note
           note='C#2'
@@ -120,6 +153,8 @@ export default function Piano({ isRecording, isPlaying }: PianoProps) {
           tune={"o"}
           isRecording={isRecording}
           isPlaying={isPlaying}
+          startTime={startTime}
+          stopTime={stopTime}
         />
         <Note
           note='D2'
@@ -127,6 +162,8 @@ export default function Piano({ isRecording, isPlaying }: PianoProps) {
           tune={"l"}
           isRecording={isRecording}
           isPlaying={isPlaying}
+          startTime={startTime}
+          stopTime={stopTime}
         />
         <Note
           note='D#2'
@@ -134,6 +171,8 @@ export default function Piano({ isRecording, isPlaying }: PianoProps) {
           tune={"p"}
           isRecording={isRecording}
           isPlaying={isPlaying}
+          startTime={startTime}
+          stopTime={stopTime}
         />
         <Note
           note='E2'
@@ -141,6 +180,8 @@ export default function Piano({ isRecording, isPlaying }: PianoProps) {
           tune={";"}
           isRecording={isRecording}
           isPlaying={isPlaying}
+          startTime={startTime}
+          stopTime={stopTime}
         />
       </div>
       <input

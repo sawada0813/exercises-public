@@ -39,7 +39,12 @@ export default function Home() {
         startTime={startTime}
         stopTime={stopTime}
       />
-      <Piano />
+      <Piano
+        isRecording={isRecording}
+        isPlaying={isPlaying}
+        startTime={startTime}
+        stopTime={stopTime}
+      />
       <Clock />
       {isPlaying ? <p>Playing...</p> : null}
       {isRecording ? <p>Recording...</p> : null}

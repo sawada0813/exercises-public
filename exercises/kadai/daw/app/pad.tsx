@@ -55,9 +55,7 @@ export default function Pad({
 
   useEffect(() => {
     if (isRecording) {
-      // const startTime = Date.now();
       setRecordedBeats([]);
-      // setStartTime(startTime);
     }
   }, [isRecording]);
 
