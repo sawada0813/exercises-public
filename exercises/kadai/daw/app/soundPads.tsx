@@ -7,6 +7,7 @@ type SoundPadsProps = {
   isPlaying: boolean;
   stopTime: number | null;
   startTime: number | null;
+  reset: boolean;
 };
 
 export default function SoundPads({
@@ -14,6 +15,7 @@ export default function SoundPads({
   isPlaying,
   stopTime,
   startTime,
+  reset,
 }: SoundPadsProps) {
   return (
     <div className='grid grid-cols-5 grid-rows-2 gap-4'>
@@ -23,6 +25,7 @@ export default function SoundPads({
         isPlaying={isPlaying}
         startTime={startTime}
         stopTime={stopTime}
+        reset={reset}
       />
       <Pad
         id={2}
@@ -30,6 +33,7 @@ export default function SoundPads({
         isPlaying={isPlaying}
         startTime={startTime}
         stopTime={stopTime}
+        reset={reset}
       />
       <Pad
         id={3}
@@ -37,6 +41,7 @@ export default function SoundPads({
         isPlaying={isPlaying}
         startTime={startTime}
         stopTime={stopTime}
+        reset={reset}
       />
       <Pad
         id={4}
@@ -44,6 +49,7 @@ export default function SoundPads({
         isPlaying={isPlaying}
         startTime={startTime}
         stopTime={stopTime}
+        reset={reset}
       />
       <Pad
         id={5}
@@ -51,6 +57,7 @@ export default function SoundPads({
         isPlaying={isPlaying}
         startTime={startTime}
         stopTime={stopTime}
+        reset={reset}
       />
       <Pad
         id={6}
@@ -58,6 +65,7 @@ export default function SoundPads({
         isPlaying={isPlaying}
         startTime={startTime}
         stopTime={stopTime}
+        reset={reset}
       />
       <Pad
         id={7}
@@ -65,6 +73,7 @@ export default function SoundPads({
         isPlaying={isPlaying}
         startTime={startTime}
         stopTime={stopTime}
+        reset={reset}
       />
       <Pad
         id={8}
@@ -72,6 +81,7 @@ export default function SoundPads({
         isPlaying={isPlaying}
         startTime={startTime}
         stopTime={stopTime}
+        reset={reset}
       />
       <Pad
         id={9}
@@ -79,6 +89,7 @@ export default function SoundPads({
         isPlaying={isPlaying}
         startTime={startTime}
         stopTime={stopTime}
+        reset={reset}
       />
       <Pad
         id={0}
@@ -86,6 +97,7 @@ export default function SoundPads({
         isPlaying={isPlaying}
         startTime={startTime}
         stopTime={stopTime}
+        reset={reset}
       />
     </div>
   );

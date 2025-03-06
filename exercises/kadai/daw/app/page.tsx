@@ -11,6 +11,7 @@ export default function Home() {
   const [isRecording, setIsRecording] = useState(false);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [stopTime, setStopTime] = useState<number | null>(null);
+  const [reset, setReset] = useState(false);
 
   const handlePlayPause = useCallback(() => {
     setIsPlaying(!isPlaying);
@@ -48,6 +49,10 @@ export default function Home() {
     };
   }, [isRecording, startTime, isPlaying, handlePlayPause, handleRecord]);
 
+  const handleReset = useCallback(() => {
+    setReset(!reset);
+  }, [reset]);
+
   return (
     <div>
       <SoundPads
@@ -55,6 +60,7 @@ export default function Home() {
         isPlaying={isPlaying}
         startTime={startTime}
         stopTime={stopTime}
+        reset={reset}
       />
       <Piano
         isRecording={isRecording}
@@ -70,6 +76,9 @@ export default function Home() {
       </Button>
       <Button variant='outlined' onClick={handleRecord}>
         {isRecording ? "録音停止" : "録音開始"}
+      </Button>
+      <Button variant='outlined' onClick={handleReset}>
+        リセット
       </Button>
     </div>
   );
