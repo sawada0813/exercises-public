@@ -13,5 +13,5 @@ export default function Clock() {
     return () => clearInterval(timerId);
   }, []);
 
-  return <div>{time?.toLocaleTimeString()}</div>;
+  return <div id={"clock"}>{time?.toLocaleTimeString()}</div>;
 }

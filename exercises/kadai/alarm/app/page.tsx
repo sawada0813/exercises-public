@@ -108,7 +108,11 @@ export default function Home() {
         </Button>
       </div>
       <Clock />
-      <select value={hours} onChange={(e) => handleChange(e, "hours")}>
+      <select
+        id={"hours"}
+        value={hours}
+        onChange={(e) => handleChange(e, "hours")}
+      >
         {Array.from({ length: 24 }, (_, i) => (
           <option key={i} value={String(i).padStart(2, "0")}>
             {String(i).padStart(2, "0")}
@@ -116,7 +120,11 @@ export default function Home() {
         ))}
       </select>
       :
-      <select value={minutes} onChange={(e) => handleChange(e, "minutes")}>
+      <select
+        id={"minutes"}
+        value={minutes}
+        onChange={(e) => handleChange(e, "minutes")}
+      >
         {Array.from({ length: 60 }, (_, i) => (
           <option key={i} value={String(i).padStart(2, "0")}>
             {String(i).padStart(2, "0")}
@@ -124,7 +132,11 @@ export default function Home() {
         ))}
       </select>
       :
-      <select value={seconds} onChange={(e) => handleChange(e, "seconds")}>
+      <select
+        id={"seconds"}
+        value={seconds}
+        onChange={(e) => handleChange(e, "seconds")}
+      >
         {Array.from({ length: 60 }, (_, i) => (
           <option key={i} value={String(i).padStart(2, "0")}>
             {String(i).padStart(2, "0")}
