@@ -1,5 +1,4 @@
 "use client";
-import { time } from "console";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 
 type PadProps = {
@@ -50,7 +49,6 @@ export default function Pad({
             }, 1);
             if (currentIndex === recordedBeats.length - 1) {
               if (stopTime) {
-                console.log(stopTime, recordedBeats[recordedBeats.length - 1]);
                 await sleep(stopTime - recordedBeats[recordedBeats.length - 1]);
               }
             }

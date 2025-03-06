@@ -12,13 +12,14 @@ export default function Home() {
   const [startTime, setStartTime] = useState<number | null>(null);
   const [stopTime, setStopTime] = useState<number | null>(null);
   const [reset, setReset] = useState(false);
+  const [fixed, setFixed] = useState(false); // 1度録音したら変更できないようにする
 
   const handlePlayPause = useCallback(() => {
     setIsPlaying(!isPlaying);
   }, [isPlaying]);
 
   const handleRecord = useCallback(() => {
-    if (!isRecording) {
+    if (!isRecording && !isPlaying) {
       setIsRecording(true);
       setIsPlaying(true);
       setStopTime(null);
@@ -26,21 +27,18 @@ export default function Home() {
     } else if (startTime) {
       setIsRecording(false);
       setStopTime(Date.now() - startTime);
+      setFixed(true);
     }
   }, [isRecording, startTime]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       event.preventDefault();
-      // if (event.key === "r" && !isRecording) {
       if (event.key === "r") {
         handleRecord();
       } else if (event.key === " ") {
-        setIsPlaying(true);
-        if (startTime) setStopTime(Date.now() - startTime);
-        if (event.key === " " && isPlaying) {
-          setIsPlaying(false);
-        }
+        setIsPlaying(!isPlaying);
+        if (startTime && !fixed) setStopTime(Date.now() - startTime);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -68,18 +66,32 @@ export default function Home() {
         startTime={startTime}
         stopTime={stopTime}
       />
-      <Clock />
       {isPlaying ? <p>Playing...</p> : null}
       {isRecording ? <p>Recording...</p> : null}
-      <Button variant='outlined' onClick={handlePlayPause}>
-        {isPlaying ? "停止" : "再生"}
-      </Button>
-      <Button variant='outlined' onClick={handleRecord}>
-        {isRecording ? "録音停止" : "録音開始"}
-      </Button>
-      <Button variant='outlined' onClick={handleReset}>
-        リセット
-      </Button>
+      <div className='flex space-x-4'>
+        <Button
+          className='px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'
+          variant='outlined'
+          onClick={handlePlayPause}
+        >
+          {isPlaying ? "停止" : "再生"}
+        </Button>
+        <Button
+          className='px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600'
+          variant='outlined'
+          onClick={handleRecord}
+        >
+          {isRecording ? "録音停止" : "録音開始"}
+        </Button>
+        <Button
+          className='px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600'
+          variant='outlined'
+          onClick={handleReset}
+        >
+          リセット
+        </Button>
+      </div>
+      <Clock />
     </div>
   );
 }
