@@ -24,6 +24,12 @@ export default function Pad({
   const [fileName, setFileName] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const timeoutRefs = useRef<NodeJS.Timeout | null>(null);
+  const [dummyIncrement, setDummyIncrement] = useState(0);
+
+  if (id === 1) {
+    console.log(recordedBeats);
+    console.log(currentIndex);
+  }
 
   useEffect(() => {
     if (reset) {
@@ -46,26 +52,40 @@ export default function Pad({
     (async () => {
       if (isPlaying && !isRecording) {
         if (recordedBeats.length === 0) return;
-        timeoutRefs.current = setTimeout(
-          async () => {
+        if (recordedBeats.length === 1) {
+          timeoutRefs.current = setTimeout(async () => {
             if (audioUrl) playAudio(audioUrl);
             setColor("bg-gray-200");
             setTimeout(() => {
               setColor("bg-gray-500");
             }, 1);
-            if (currentIndex === recordedBeats.length - 1) {
-              if (stopTime) {
-                await sleep(stopTime - recordedBeats[recordedBeats.length - 1]);
+            if (stopTime) await sleep(stopTime - recordedBeats[0]);
+            setDummyIncrement((prevIndex) => prevIndex + 1);
+          }, recordedBeats[0]);
+        } else {
+          timeoutRefs.current = setTimeout(
+            async () => {
+              if (audioUrl) playAudio(audioUrl);
+              setColor("bg-gray-200");
+              setTimeout(() => {
+                setColor("bg-gray-500");
+              }, 1);
+              if (currentIndex === recordedBeats.length - 1) {
+                if (stopTime) {
+                  await sleep(
+                    stopTime - recordedBeats[recordedBeats.length - 1]
+                  );
+                }
               }
-            }
-            setCurrentIndex(
-              (prevIndex) => (prevIndex + 1) % recordedBeats.length
-            );
-          },
-          currentIndex === 0
-            ? recordedBeats[currentIndex]
-            : recordedBeats[currentIndex] - recordedBeats[currentIndex - 1]
-        );
+              setCurrentIndex(
+                (prevIndex) => (prevIndex + 1) % recordedBeats.length
+              );
+            },
+            currentIndex === 0
+              ? recordedBeats[currentIndex]
+              : recordedBeats[currentIndex] - recordedBeats[currentIndex - 1]
+          );
+        }
       }
     })();
     return () => {
@@ -82,6 +102,7 @@ export default function Pad({
     stopTime,
     sleep,
     audioUrl,
+    dummyIncrement,
   ]);
 
   useEffect(() => {

@@ -7,6 +7,7 @@ type PianoProps = {
   isPlaying: boolean;
   stopTime: number | null;
   startTime: number | null;
+  reset: boolean;
 };
 
 export default function Piano({
@@ -14,6 +15,7 @@ export default function Piano({
   isPlaying,
   stopTime,
   startTime,
+  reset,
 }: PianoProps) {
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
 
@@ -38,6 +40,7 @@ export default function Piano({
           isPlaying={isPlaying}
           startTime={startTime}
           stopTime={stopTime}
+          reset={reset}
         />
         <Note
           note='C#1'
@@ -47,6 +50,7 @@ export default function Piano({
           isPlaying={isPlaying}
           startTime={startTime}
           stopTime={stopTime}
+          reset={reset}
         />
         <Note
           note='D1'
@@ -56,6 +60,7 @@ export default function Piano({
           isPlaying={isPlaying}
           startTime={startTime}
           stopTime={stopTime}
+          reset={reset}
         />
         <Note
           note='D#1'
@@ -65,6 +70,7 @@ export default function Piano({
           isPlaying={isPlaying}
           startTime={startTime}
           stopTime={stopTime}
+          reset={reset}
         />
         <Note
           note='E1'
@@ -74,6 +80,7 @@ export default function Piano({
           isPlaying={isPlaying}
           startTime={startTime}
           stopTime={stopTime}
+          reset={reset}
         />
         <Note
           note='F1'
@@ -83,6 +90,7 @@ export default function Piano({
           isPlaying={isPlaying}
           startTime={startTime}
           stopTime={stopTime}
+          reset={reset}
         />
         <Note
           note='F#1'
@@ -92,6 +100,7 @@ export default function Piano({
           isPlaying={isPlaying}
           startTime={startTime}
           stopTime={stopTime}
+          reset={reset}
         />
         <Note
           note='G1'
@@ -101,6 +110,7 @@ export default function Piano({
           isPlaying={isPlaying}
           startTime={startTime}
           stopTime={stopTime}
+          reset={reset}
         />
         <Note
           note='G#1'
@@ -110,6 +120,7 @@ export default function Piano({
           isPlaying={isPlaying}
           startTime={startTime}
           stopTime={stopTime}
+          reset={reset}
         />
         <Note
           note='A1'
@@ -119,6 +130,7 @@ export default function Piano({
           isPlaying={isPlaying}
           startTime={startTime}
           stopTime={stopTime}
+          reset={reset}
         />
         <Note
           note='A#1'
@@ -128,6 +140,7 @@ export default function Piano({
           isPlaying={isPlaying}
           startTime={startTime}
           stopTime={stopTime}
+          reset={reset}
         />
         <Note
           note='B1'
@@ -137,6 +150,7 @@ export default function Piano({
           isPlaying={isPlaying}
           startTime={startTime}
           stopTime={stopTime}
+          reset={reset}
         />
         <Note
           note='C2'
@@ -155,6 +169,7 @@ export default function Piano({
           isPlaying={isPlaying}
           startTime={startTime}
           stopTime={stopTime}
+          reset={reset}
         />
         <Note
           note='D2'
@@ -164,6 +179,7 @@ export default function Piano({
           isPlaying={isPlaying}
           startTime={startTime}
           stopTime={stopTime}
+          reset={reset}
         />
         <Note
           note='D#2'
@@ -173,6 +189,7 @@ export default function Piano({
           isPlaying={isPlaying}
           startTime={startTime}
           stopTime={stopTime}
+          reset={reset}
         />
         <Note
           note='E2'
@@ -182,6 +199,7 @@ export default function Piano({
           isPlaying={isPlaying}
           startTime={startTime}
           stopTime={stopTime}
+          reset={reset}
         />
       </div>
       <input

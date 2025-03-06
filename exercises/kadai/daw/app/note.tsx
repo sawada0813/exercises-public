@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 
 type NoteProps = {
   note: string;
@@ -9,6 +9,7 @@ type NoteProps = {
   isPlaying: boolean;
   stopTime: number | null;
   startTime: number | null;
+  reset: boolean;
 };
 
 export default function Note({
@@ -19,61 +20,200 @@ export default function Note({
   isPlaying,
   stopTime,
   startTime,
+  reset,
 }: NoteProps) {
   const [color, setColor] = useState(
     note.includes("#") ? "bg-black" : "bg-white"
   );
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [recordedBeats, setRecordedBeats] = useState<number[]>([]);
   const textColor = note.includes("#") ? "text-white" : "text-black";
+  const timeoutRefs = useRef<NodeJS.Timeout | null>(null);
+  const [dummyIncrement, setDummyIncrement] = useState(0);
 
-  const handleClick = (note: string) => {
-    // keydown イベントを記録
-    if (startTime && isRecording) {
-      setRecordedBeats([...recordedBeats, Date.now() - startTime]);
+  if (note === "C2") {
+    console.log(recordedBeats);
+  }
+
+  const generateNote = useCallback(
+    (note: string) => {
+      const audioContext = new window.AudioContext();
+      if (audioUrl === null) return;
+      const audioElement = new Audio(audioUrl); // 使用する音声ファイルのパスを指定
+      const audioSourceNode =
+        audioContext.createMediaElementSource(audioElement);
+
+      const gainNode = audioContext.createGain();
+      audioSourceNode.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      audioElement.preservesPitch = false;
+      switch (note) {
+        case "C1":
+          audioElement.playbackRate = 1.0;
+          return audioElement;
+        case "C#1":
+          audioElement.playbackRate = 1.059463;
+          return audioElement;
+        case "D1":
+          audioElement.playbackRate = 1.122462;
+          return audioElement;
+        case "D#1":
+          audioElement.playbackRate = 1.189207;
+          return audioElement;
+        case "E1":
+          audioElement.playbackRate = 1.259921;
+          return audioElement;
+        case "F1":
+          audioElement.playbackRate = 1.33484;
+          return audioElement;
+        case "F#1":
+          audioElement.playbackRate = 1.414214;
+          return audioElement;
+        case "G1":
+          audioElement.playbackRate = 1.498307;
+          return audioElement;
+        case "G#1":
+          audioElement.playbackRate = 1.587401;
+          return audioElement;
+        case "A1":
+          audioElement.playbackRate = 1.681793;
+          return audioElement;
+        case "A#1":
+          audioElement.playbackRate = 1.781797;
+          return audioElement;
+        case "B1":
+          audioElement.playbackRate = 1.887749;
+          return audioElement;
+        case "C2":
+          audioElement.playbackRate = 2.0;
+          return audioElement;
+        case "C#2":
+          audioElement.playbackRate = 2.118926;
+          return audioElement;
+        case "D2":
+          audioElement.playbackRate = 2.244924;
+          return audioElement;
+        case "D#2":
+          audioElement.playbackRate = 2.378414;
+          return audioElement;
+        case "E2":
+          audioElement.playbackRate = 2.519842;
+          return audioElement;
+        default:
+          return;
+      }
+    },
+    [audioUrl]
+  );
+
+  const playAudio = useCallback(
+    (note: string) => {
+      const audioElement = generateNote(note);
+      // 音声を再生
+      if (audioElement) {
+        audioElement.addEventListener("ended", () => {
+          releaseAudioElement(audioElement);
+        });
+        console.log(audioElement);
+        audioElement.play();
+      }
+    },
+    [generateNote]
+  );
+
+  useEffect(() => {
+    if (reset) {
+      setRecordedBeats([]);
     }
-    playAudio(note);
-    const prevColor = color;
-    setColor("bg-gray-200");
-    setTimeout(() => {
-      setColor(prevColor);
-    }, 100);
-  };
+  }, [reset]);
 
-  const sleep = (time: number) => new Promise((r) => setTimeout(r, time));
+  useEffect(() => {
+    if (isPlaying) {
+      setCurrentIndex(0);
+    }
+  }, [isPlaying]);
+
+  const handleClick = useCallback(
+    (note: string) => {
+      // keydown イベントを記録
+      if (startTime && isRecording) {
+        setRecordedBeats([...recordedBeats, Date.now() - startTime]);
+      }
+      playAudio(note);
+      const prevColor = color;
+      setColor("bg-gray-200");
+      setTimeout(() => {
+        setColor(prevColor);
+      }, 100);
+    },
+    [color, recordedBeats, startTime, isRecording, playAudio]
+  );
+
+  const sleep = useCallback(
+    (time: number) => new Promise((r) => setTimeout(r, time)),
+    []
+  );
 
   useEffect(() => {
     (async () => {
-      let timerID;
-      if (recordedBeats.length === 0) {
-        return;
-      }
-      if (isPlaying && audioUrl && stopTime && startTime) {
-        let index = 0;
-        const playSound = async () => {
-          playAudio(note);
-          const prevColor = color;
-          setColor("bg-gray-200");
-          setTimeout(() => {
-            setColor(prevColor);
-          }, 1);
-          index = (index + 1) % recordedBeats.length;
-          if (index === 0) {
-            await sleep(stopTime - recordedBeats[recordedBeats.length - 1]);
-            timerID = setTimeout(playSound, recordedBeats[0]);
-          } else {
-            timerID = setTimeout(
-              playSound,
-              recordedBeats[index] - recordedBeats[index - 1]
-            );
-          }
-        };
-        timerID = setTimeout(playSound, recordedBeats[0]);
-      } else {
-        clearInterval(timerID);
+      if (isPlaying && !isRecording) {
+        if (recordedBeats.length === 0) return;
+        if (recordedBeats.length === 1) {
+          timeoutRefs.current = setTimeout(async () => {
+            if (audioUrl) playAudio(audioUrl);
+            setColor("bg-gray-200");
+            setTimeout(() => {
+              setColor("bg-gray-500");
+            }, 1);
+            if (stopTime) await sleep(stopTime - recordedBeats[0]);
+            setDummyIncrement((prevIndex) => prevIndex + 1);
+          }, recordedBeats[0]);
+        } else {
+          timeoutRefs.current = setTimeout(
+            async () => {
+              playAudio(note);
+              const prevColor = color;
+              setColor("bg-gray-200");
+              setTimeout(() => {
+                setColor(prevColor);
+              }, 1);
+              if (currentIndex === recordedBeats.length - 1) {
+                if (stopTime) {
+                  await sleep(
+                    stopTime - recordedBeats[recordedBeats.length - 1]
+                  );
+                }
+              }
+              setCurrentIndex(
+                (prevIndex) => (prevIndex + 1) % recordedBeats.length
+              );
+            },
+            currentIndex === 0
+              ? recordedBeats[currentIndex]
+              : recordedBeats[currentIndex] - recordedBeats[currentIndex - 1]
+          );
+        }
       }
     })();
-  }, [isPlaying, startTime, stopTime, recordedBeats]);
-
+    return () => {
+      // useEffectが再実行される時やコンポーネントがアンマウントされる時にタイマーをクリア
+      if (timeoutRefs.current) {
+        clearTimeout(timeoutRefs.current);
+      }
+    };
+  }, [
+    isPlaying,
+    isRecording,
+    recordedBeats,
+    currentIndex,
+    stopTime,
+    sleep,
+    playAudio,
+    color,
+    note,
+    dummyIncrement,
+    audioUrl,
+  ]);
   useEffect(() => {
     if (isRecording) {
       setRecordedBeats([]);
@@ -93,74 +233,7 @@ export default function Note({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [audioUrl, handleClick, isRecording]);
-
-  const generateNote = (note: string) => {
-    const audioContext = new window.AudioContext();
-    if (audioUrl === null) return;
-    const audioElement = new Audio(audioUrl); // 使用する音声ファイルのパスを指定
-    const audioSourceNode = audioContext.createMediaElementSource(audioElement);
-
-    const gainNode = audioContext.createGain();
-    audioSourceNode.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    audioElement.preservesPitch = false;
-    switch (note) {
-      case "C1":
-        audioElement.playbackRate = 1.0;
-        return audioElement;
-      case "C#1":
-        audioElement.playbackRate = 1.059463;
-        return audioElement;
-      case "D1":
-        audioElement.playbackRate = 1.122462;
-        return audioElement;
-      case "D#1":
-        audioElement.playbackRate = 1.189207;
-        return audioElement;
-      case "E1":
-        audioElement.playbackRate = 1.259921;
-        return audioElement;
-      case "F1":
-        audioElement.playbackRate = 1.33484;
-        return audioElement;
-      case "F#1":
-        audioElement.playbackRate = 1.414214;
-        return audioElement;
-      case "G1":
-        audioElement.playbackRate = 1.498307;
-        return audioElement;
-      case "G#1":
-        audioElement.playbackRate = 1.587401;
-        return audioElement;
-      case "A1":
-        audioElement.playbackRate = 1.681793;
-        return audioElement;
-      case "A#1":
-        audioElement.playbackRate = 1.781797;
-        return audioElement;
-      case "B1":
-        audioElement.playbackRate = 1.887749;
-        return audioElement;
-      case "C2":
-        audioElement.playbackRate = 2.0;
-        return audioElement;
-      case "C#2":
-        audioElement.playbackRate = 2.118926;
-        return audioElement;
-      case "D2":
-        audioElement.playbackRate = 2.244924;
-        return audioElement;
-      case "D#2":
-        audioElement.playbackRate = 2.378414;
-        return audioElement;
-      case "E2":
-        audioElement.playbackRate = 2.519842;
-        return audioElement;
-      default:
-        return;
-    }
-  };
+  }, [audioUrl, handleClick, isRecording, note, tune]);
 
   function releaseAudioElement(audioElement: HTMLAudioElement) {
     // 再生を停止
@@ -175,17 +248,6 @@ export default function Note({
       audioElement.parentNode.removeChild(audioElement);
     }
   }
-
-  const playAudio = (note: string) => {
-    const audioElement = generateNote(note);
-    // 音声を再生
-    if (audioElement) {
-      audioElement.addEventListener("ended", () => {
-        releaseAudioElement(audioElement);
-      });
-      audioElement.play();
-    }
-  };
 
   return (
     <div
