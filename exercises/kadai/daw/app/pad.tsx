@@ -1,6 +1,6 @@
 "use client";
-import { clear } from "console";
-import React, { useState, useEffect, useCallback } from "react";
+import { time } from "console";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 
 type PadProps = {
   id: number;
@@ -21,6 +21,8 @@ export default function Pad({
   const [color, setColor] = useState("bg-gray-500");
   const [recordedBeats, setRecordedBeats] = useState<number[]>([]);
   const [fileName, setFileName] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const timeoutRefs = useRef<NodeJS.Timeout | null>(null);
 
   const sleep = useCallback(
     (time: number) => new Promise((r) => setTimeout(r, time)),
@@ -28,56 +30,103 @@ export default function Pad({
   );
 
   useEffect(() => {
-    if (id === 1) {
-      console.log("useEffect");
-      console.log(isPlaying);
-    }
+    console.log("recordedBeats", recordedBeats);
     (async () => {
-      let timerID;
-      if (id === 1) {
-        console.log(timerID);
-      }
-      if (recordedBeats.length === 0) {
-        clearTimeout(timerID);
-        return;
-      }
-      if (!isPlaying) {
-        if (id === 1) {
-          console.log("!isPlaying");
-          console.log(timerID);
-        }
-        clearTimeout(timerID);
-        return;
-      }
-      if (isPlaying && audioUrl && stopTime && startTime) {
-        let index = 0;
-        const playSound = async () => {
-          playAudio(audioUrl);
-          setColor("bg-gray-200");
-          setTimeout(() => {
-            setColor("bg-gray-500");
-          }, 1);
-          index = (index + 1) % recordedBeats.length;
-          if (index === 0) {
-            await sleep(stopTime - recordedBeats[recordedBeats.length - 1]);
-            timerID = setTimeout(playSound, recordedBeats[0]);
-          } else {
-            timerID = setTimeout(
-              playSound,
-              recordedBeats[index] - recordedBeats[index - 1]
+      if (isPlaying && !isRecording) {
+        console.log("===");
+        console.log(
+          recordedBeats[currentIndex] - recordedBeats[currentIndex - 1]
+        );
+        if (recordedBeats.length === 0) return;
+        timeoutRefs.current = setTimeout(
+          async () => {
+            if (audioUrl) playAudio(audioUrl);
+            setColor("bg-gray-200");
+            setTimeout(() => {
+              setColor("bg-gray-500");
+            }, 1);
+            if (currentIndex === recordedBeats.length - 1) {
+              if (stopTime) {
+                console.log(stopTime, recordedBeats[recordedBeats.length - 1]);
+                await sleep(stopTime - recordedBeats[recordedBeats.length - 1]);
+              }
+            }
+            setCurrentIndex(
+              (prevIndex) => (prevIndex + 1) % recordedBeats.length
             );
-          }
-        };
-        timerID = setTimeout(playSound, recordedBeats[0]);
-      } else {
-        if (id === 1) {
-          console.log("else");
-          console.log(timerID);
-        }
-        clearTimeout(timerID);
+          },
+          currentIndex === 0
+            ? recordedBeats[currentIndex]
+            : recordedBeats[currentIndex] - recordedBeats[currentIndex - 1]
+        );
       }
     })();
-  }, [isPlaying, startTime, stopTime, recordedBeats, audioUrl, sleep]);
+    return () => {
+      // useEffectが再実行される時やコンポーネントがアンマウントされる時にタイマーをクリア
+      if (timeoutRefs.current) {
+        clearTimeout(timeoutRefs.current);
+      }
+    };
+  }, [
+    isPlaying,
+    isRecording,
+    recordedBeats,
+    currentIndex,
+    stopTime,
+    sleep,
+    audioUrl,
+  ]);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     if (recordedBeats.length === 0) return;
+  //     if (isPlaying && audioUrl && stopTime && startTime) {
+  //       // let index = 0;
+  //       const playSound = async () => {
+  //         playAudio(audioUrl);
+  //         setColor("bg-gray-200");
+  //         setTimeout(() => {
+  //           setColor("bg-gray-500");
+  //         }, 1);
+  //         if (currentIndex === 0) {
+  //           await sleep(stopTime - recordedBeats[recordedBeats.length - 1]);
+  //           timeoutRefs.current = setTimeout(playSound, recordedBeats[0]);
+  //         } else {
+  //           timeoutRefs.current = setTimeout(
+  //             playSound,
+  //             recordedBeats[currentIndex] - recordedBeats[currentIndex - 1]
+  //           );
+  //         }
+  //         setCurrentIndex(
+  //           (prevIndex) => (prevIndex + 1) % recordedBeats.length
+  //         );
+  //         // if (currentIndex === 0) {
+  //         //   await sleep(stopTime - recordedBeats[recordedBeats.length - 1]);
+  //         //   timeoutRefs.current = setTimeout(playSound, recordedBeats[0]);
+  //         // } else {
+  //         //   timeoutRefs.current = setTimeout(
+  //         //     playSound,
+  //         //     recordedBeats[currentIndex] - recordedBeats[currentIndex - 1]
+  //         //   );
+  //         // }
+  //       };
+  //       timeoutRefs.current = setTimeout(playSound, recordedBeats[0]);
+  //       // } else {
+  //       //   clearTimeout(timeoutRefs.current as NodeJS.Timeout);
+  //     }
+  //   })();
+  //   return () => {
+  //     clearTimeout(timeoutRefs.current as NodeJS.Timeout);
+  //   };
+  // }, [
+  //   isPlaying,
+  //   startTime,
+  //   stopTime,
+  //   recordedBeats,
+  //   audioUrl,
+  //   sleep,
+  //   currentIndex,
+  // ]);
 
   useEffect(() => {
     if (isRecording) {
