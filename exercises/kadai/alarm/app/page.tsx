@@ -82,89 +82,97 @@ export default function Home() {
         stopTime={stopTime}
         reset={reset}
       />
-      {isPlaying ? <p>Playing...</p> : null}
-      {isRecording ? <p>Recording...</p> : null}
-      <div className='flex space-x-4'>
-        <Button
-          className='px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'
-          variant='outlined'
-          onClick={handlePlayPause}
+      <div className='w-screen flex items-center justify-center space-y-4'>
+        {isPlaying ? <p>Playing...</p> : null}
+        {isRecording ? <p>Recording...</p> : null}
+      </div>
+      <div className='w-screen flex items-center justify-center space-y-4'>
+        <div className='flex space-x-4'>
+          <Button
+            className='px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'
+            variant='outlined'
+            onClick={handlePlayPause}
+          >
+            {isPlaying ? "停止" : "再生"}
+          </Button>
+          <Button
+            className='px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600'
+            variant='outlined'
+            onClick={handleRecord}
+          >
+            {isRecording ? "録音停止" : "録音開始"}
+          </Button>
+          <Button
+            className='px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600'
+            variant='outlined'
+            onClick={handleReset}
+          >
+            リセット
+          </Button>
+        </div>
+      </div>
+      <div className='w-screen flex items-center justify-center'>
+        <Clock />
+      </div>
+      <div className='w-screen flex items-center justify-center text-[4vw]'>
+        <select
+          id={"hours"}
+          value={hours}
+          onChange={(e) => handleChange(e, "hours")}
         >
-          {isPlaying ? "停止" : "再生"}
-        </Button>
-        <Button
-          className='px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600'
-          variant='outlined'
-          onClick={handleRecord}
+          {Array.from({ length: 24 }, (_, i) => (
+            <option key={i} value={String(i).padStart(2, "0")}>
+              {String(i).padStart(2, "0")}
+            </option>
+          ))}
+        </select>
+        :
+        <select
+          id={"minutes"}
+          value={minutes}
+          onChange={(e) => handleChange(e, "minutes")}
         >
-          {isRecording ? "録音停止" : "録音開始"}
-        </Button>
-        <Button
-          className='px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600'
-          variant='outlined'
-          onClick={handleReset}
+          {Array.from({ length: 60 }, (_, i) => (
+            <option key={i} value={String(i).padStart(2, "0")}>
+              {String(i).padStart(2, "0")}
+            </option>
+          ))}
+        </select>
+        :
+        <select
+          id={"seconds"}
+          value={seconds}
+          onChange={(e) => handleChange(e, "seconds")}
         >
-          リセット
+          {Array.from({ length: 60 }, (_, i) => (
+            <option key={i} value={String(i).padStart(2, "0")}>
+              {String(i).padStart(2, "0")}
+            </option>
+          ))}
+        </select>
+        <Button
+          className='px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600'
+          variant='outlined'
+          onClick={() => {
+            const alarm = new Date();
+            alarm.setHours(Number(hours));
+            alarm.setMinutes(Number(minutes));
+            alarm.setSeconds(Number(seconds));
+            const now = new Date();
+            const diff = alarm.getTime() - now.getTime();
+            console.log(diff);
+            if (diff > 0) {
+              setTimeout(() => {
+                setIsPlaying(true);
+              }, diff);
+            } else {
+              alert("無効な時間です");
+            }
+          }}
+        >
+          アラームセット
         </Button>
       </div>
-      <Clock />
-      <select
-        id={"hours"}
-        value={hours}
-        onChange={(e) => handleChange(e, "hours")}
-      >
-        {Array.from({ length: 24 }, (_, i) => (
-          <option key={i} value={String(i).padStart(2, "0")}>
-            {String(i).padStart(2, "0")}
-          </option>
-        ))}
-      </select>
-      :
-      <select
-        id={"minutes"}
-        value={minutes}
-        onChange={(e) => handleChange(e, "minutes")}
-      >
-        {Array.from({ length: 60 }, (_, i) => (
-          <option key={i} value={String(i).padStart(2, "0")}>
-            {String(i).padStart(2, "0")}
-          </option>
-        ))}
-      </select>
-      :
-      <select
-        id={"seconds"}
-        value={seconds}
-        onChange={(e) => handleChange(e, "seconds")}
-      >
-        {Array.from({ length: 60 }, (_, i) => (
-          <option key={i} value={String(i).padStart(2, "0")}>
-            {String(i).padStart(2, "0")}
-          </option>
-        ))}
-      </select>
-      <Button
-        className='px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600'
-        variant='outlined'
-        onClick={() => {
-          const alarm = new Date();
-          alarm.setHours(Number(hours));
-          alarm.setMinutes(Number(minutes));
-          alarm.setSeconds(Number(seconds));
-          const now = new Date();
-          const diff = alarm.getTime() - now.getTime();
-          console.log(diff);
-          if (diff > 0) {
-            setTimeout(() => {
-              setIsPlaying(true);
-            }, diff);
-          } else {
-            alert("無効な時間です");
-          }
-        }}
-      >
-        アラームセット
-      </Button>
     </div>
   );
 }

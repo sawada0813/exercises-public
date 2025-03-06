@@ -48,55 +48,55 @@ export default function Note({
       gainNode.connect(audioContext.destination);
       audioElement.preservesPitch = false;
       switch (note) {
-        case "C1":
+        case "C4":
           audioElement.playbackRate = 1.0;
           return audioElement;
-        case "C#1":
+        case "C#4":
           audioElement.playbackRate = 1.059463;
           return audioElement;
-        case "D1":
+        case "D4":
           audioElement.playbackRate = 1.122462;
           return audioElement;
-        case "D#1":
+        case "D#4":
           audioElement.playbackRate = 1.189207;
           return audioElement;
-        case "E1":
+        case "E4":
           audioElement.playbackRate = 1.259921;
           return audioElement;
-        case "F1":
+        case "F4":
           audioElement.playbackRate = 1.33484;
           return audioElement;
-        case "F#1":
+        case "F#4":
           audioElement.playbackRate = 1.414214;
           return audioElement;
-        case "G1":
+        case "G4":
           audioElement.playbackRate = 1.498307;
           return audioElement;
-        case "G#1":
+        case "G#4":
           audioElement.playbackRate = 1.587401;
           return audioElement;
-        case "A1":
+        case "A4":
           audioElement.playbackRate = 1.681793;
           return audioElement;
-        case "A#1":
+        case "A#4":
           audioElement.playbackRate = 1.781797;
           return audioElement;
-        case "B1":
+        case "B4":
           audioElement.playbackRate = 1.887749;
           return audioElement;
-        case "C2":
+        case "C5":
           audioElement.playbackRate = 2.0;
           return audioElement;
-        case "C#2":
+        case "C#5":
           audioElement.playbackRate = 2.118926;
           return audioElement;
-        case "D2":
+        case "D5":
           audioElement.playbackRate = 2.244924;
           return audioElement;
-        case "D#2":
+        case "D#5":
           audioElement.playbackRate = 2.378414;
           return audioElement;
-        case "E2":
+        case "E5":
           audioElement.playbackRate = 2.519842;
           return audioElement;
         default:
