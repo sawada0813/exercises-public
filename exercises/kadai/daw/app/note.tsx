@@ -162,10 +162,27 @@ export default function Note({
     }
   };
 
+  function releaseAudioElement(audioElement: HTMLAudioElement) {
+    // 再生を停止
+    audioElement.pause();
+
+    // 音声リソースをクリア
+    audioElement.src = "";
+    audioElement.load();
+
+    // DOMから削除 (もしDOMに追加している場合)
+    if (audioElement.parentNode) {
+      audioElement.parentNode.removeChild(audioElement);
+    }
+  }
+
   const playAudio = (note: string) => {
     const audioElement = generateNote(note);
     // 音声を再生
     if (audioElement) {
+      audioElement.addEventListener("ended", () => {
+        releaseAudioElement(audioElement);
+      });
       audioElement.play();
     }
   };

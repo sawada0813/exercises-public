@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef, use } from "react";
 
 type PadProps = {
   id: number;
@@ -35,6 +35,12 @@ export default function Pad({
     (time: number) => new Promise((r) => setTimeout(r, time)),
     []
   );
+
+  useEffect(() => {
+    if (isPlaying) {
+      setCurrentIndex(0);
+    }
+  }, [isPlaying]);
 
   useEffect(() => {
     (async () => {

@@ -45,10 +45,11 @@ export default function Home() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isRecording, startTime, isPlaying, handlePlayPause, handleRecord]);
+  }, [isRecording, startTime, isPlaying, handlePlayPause, handleRecord, fixed]);
 
   const handleReset = useCallback(() => {
     setReset(!reset);
+    setFixed(false);
   }, [reset]);
 
   return (
